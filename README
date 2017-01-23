@@ -1,12 +1,13 @@
-Copyright (c) 2004 The University of Chicago, as Operator of Argonne
+Copyright (c) 1991-2010 UChicago Argonne LLC, as Operator of Argonne
 National Laboratory.
-Copyright (c) 2004 The Regents of the University of California, as
+Copyright (c) 1991-2004 The Regents of the University of California, as
 Operator of Los Alamos National Laboratory.
-This file is distributed subject to a Software License Agreement found
+
+This software is distributed subject to a Software License Agreement found
 in the file LICENSE that is included with this distribution. 
 
-			README file for the devSymb module
-			----------------------------------
+		README file for the devSymb module
+		----------------------------------
 
 This EPICS module contains the vxWorks global variable device support. This
 version has been built on R3.14.11 but should work on releases back to
@@ -26,9 +27,7 @@ symbApp/
     devLiSymb.c
     devLoSymb.c
     devMbbiSymb.c
-    devMbbiSymbRaw.c
     devMbboSymb.c
-    devMbboSymbRaw.c
     devSiSymb.c
     devSoSymb.c
     devWfSymb.c

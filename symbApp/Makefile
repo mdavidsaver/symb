@@ -13,7 +13,6 @@ Symb_SRCS_vxWorks += devBoSymb.c
 Symb_SRCS_vxWorks += devLiSymb.c
 Symb_SRCS_vxWorks += devLoSymb.c
 Symb_SRCS_vxWorks += devMbbiSymb.c
-Symb_SRCS_vxWorks += devMbbiSymbRaw.c
 Symb_SRCS_vxWorks += devMbboSymb.c
 Symb_SRCS_vxWorks += devMbboSymbRaw.c
 Symb_SRCS_vxWorks += devSiSymb.c

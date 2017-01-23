@@ -1,8 +1,13 @@
-#Makefile at top of application tree
+# Makefile at top of application tree
 TOP = .
 include $(TOP)/configure/CONFIG
-DIRS := $(DIRS) $(filter-out $(DIRS), configure)
 
-DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *App))
-DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard iocBoot))
+DIRS := configure
+
+DIRS += symbApp
+symbApp_DEPEND_DIRS = configure
+
+DIRS += testApp
+testApp_DEPEND_DIRS = symbApp
+
 include $(TOP)/configure/RULES_TOP

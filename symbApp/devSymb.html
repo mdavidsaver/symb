@@ -7,16 +7,16 @@
 <H2>VxWorks global symbol device support</H2>
 
 <P>This document describes the unbundled version of the symbol support that is
-intended for use with EPICS Base R3.14.1 and later.  Earlier versions of this
+intended for use with EPICS Base R3.14.3 and later. Earlier versions of this
 device support were included with EPICS Base.</P>
 
 <H3>Overview</H3>
 
 <P>VxWorks gives the programmer access to a library of symbol table support
 routines and provides a global symbol table which contains all external
-variable and function references in the system.  The device support module
+variable and function references in the system. The device support module
 described here allow selected record types to read and write variables
-referenced by name.  This capability allows EPICS to monitor and influence
+referenced by name. This capability allows EPICS to monitor and influence
 VxWorks-runnable code which was written without any knowledge of EPICS; the
 code needs only to have its critical variables declared externally, that is,
 left non-static outside any function definitions in the usual `C' manner.</P>
@@ -45,36 +45,34 @@ when building the binary object for the IOC by adding it to the application's
 Makefile as follows:</P>
 
 <BLOCKQUOTE>
-<PRE>myapp_LIBS_vxWorks += Symb
-Symb_DIR = $(SYMB_LIB)</PRE>
+<PRE>myapp_LIBS_vxWorks += Symb</PRE>
 </BLOCKQUOTE>
 
 <H3>Description</H3>
 
 <P>Device support is provided for most of the standard input and output record
-types.  These provide the ability to read and write <CODE>double</CODE> (ai,
-ao), <CODE>long</CODE> (bi, bo, mbbi, mbbo, longin, longout), and
-<CODE>char&nbsp;*</CODE> (stringin, stringout) variable types.  Waveform
-records use the TYPE field to select which variable type to read.</P>
+types. These provide the ability to read and write <CODE>double</CODE> (ai,
+ao), <CODE>short</CODE> (bi, bo, mbbi, mbbo), <CODE>long</CODE> (longin,
+longout), and <CODE>char&nbsp;*</CODE> (stringin, stringout) variable types.
+Waveform records use the TYPE field to select which variable type to read.</P>
 
 <P>The device type "vxWorks Variable" is defined for each of the above record
-types in the <CODE>symb.dbd</CODE> file.  Within a database the name of the
+types in the <CODE>symb.dbd</CODE> file. Within a database the name of the
 VxWorks symbol desired is obtained one of two ways, depending on whether the
 LINK field type is a CONSTANT or INST_IO.</P>
 
 <DL>
 <DT>CONSTANT
-<DD>The name of the vxWorks global variable is derived from the record
-name by stripping off any prefix ending with the first ":" and any
-suffix starting with the last ";".  An underscore is automatically
-prefixed if required by the particular target architecture.
+<DD>The name of the vxWorks global variable is derived from the record name by
+stripping off any prefix ending with the first ":" and any suffix starting with
+the last ";". An underscore is automatically prefixed to the symbol name if
+required by the particular target architecture.
 
-<P>For example:  "<CODE>ppp:fred;sss</CODE>" refers to the vxWorks global
-variable "<CODE>fred</CODE>".</P>
+<P>For example: a record named "<CODE>ppp:fred;sss</CODE>" refers to the
+vxWorks global variable "<CODE>fred</CODE>".</P>
 
-<P>The intention is that the prefix would refer to the IOC and the suffix
-would  distinguish references within an IOC.  Suffixes and prefixes are
-optional.</P>
+<P>The intention is that the prefix would refer to the IOC and the suffix would
+distinguish references within an IOC. Suffixes and prefixes are optional.</P>
 
 </DD>
 
@@ -104,7 +102,7 @@ sizeof(double)) and applied as an offset to the data address.</P>
 <P>
 <DT>INDIRECT</DT>
 <DD>"<CODE>*fred</CODE>" refers to the value whose address is given in the
-vxWorks global pointer "<CODE>fred</CODE>".   The value of the pointer will be
+vxWorks global pointer "<CODE>fred</CODE>". The value of the pointer will be
 read at run-time rather than initialisation, allowing it to be changed
 dynamically.</DD>
 
@@ -120,7 +118,7 @@ dynamically.</DD>
 element of that array</DD> </DL>
 
 <P>Note that the interpretation of the "<CODE>*</CODE>" operator is not the
-same as in C.  For example, "<CODE>fred</CODE>" and "<CODE>fred[0]</CODE>"
+same as in C. For example, "<CODE>fred</CODE>" and "<CODE>fred[0]</CODE>"
 produce the same result, but "<CODE>*fred</CODE>" and "<CODE>fred[0]</CODE>"
 are different.</P>
 
@@ -133,15 +131,15 @@ starts at the third character of the string.</P>
 </DL>
 
 <P>Symbol table lookup is performed only at record init time; the resulting
-pointer is stored in the DPVT field.  (The indirection, if present, is resolved
-at run time.)  If the symbol is not found an illegal NAME field error is posted
-and DPVT is set to NULL.  Processing consists of reading or writing the VAL
+pointer is stored in the DPVT field. The indirection, if present, is resolved
+at run time. If the symbol is not found an illegal NAME field error is posted
+and DPVT is set to NULL. Processing consists of reading or writing the VAL
 field using the pointer, unless the pointer is NULL, in which case the device
 support module exits immediately.</P>
 
 <P>Other than for the multi-bit raw support no value conversions are performed;
 it is assumed that the symbol refers to a variable of the same type as the
-record's VAL field.  String operations are restricted to the 40 character size
+record's VAL field. String operations are restricted to the 40 character size
 of the string record VAL fields and null termination is enforced.</P>
 
 <P>No exclusion or interlocking with other code using the referenced variable
@@ -152,7 +150,7 @@ record types) and EPICS will poll the code's output variables with suitable
 SCAN field values (using input record types).</P>
 
 <HR>
-<I>Updated Andrew Johnson, 1999 & 2003</I>
+<I>Updated Andrew Johnson, 1999 & 2003-2004</I>
 
 </BODY>
 </HTML>

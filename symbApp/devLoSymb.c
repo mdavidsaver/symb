@@ -17,15 +17,13 @@
 #include	<string.h>
 #include	<intLib.h>
 
-#include	<alarm.h>
-#include	<dbDefs.h>
-#include	<dbAccess.h>
-#include	<recSup.h>
-#include	<recGbl.h>
-#include	<devSup.h>
-#include	<longoutRecord.h>
-#include	<devSymb.h>
-#include	<epicsExport.h>
+#include	"dbDefs.h"
+#include	"dbAccess.h"
+#include	"recGbl.h"
+#include	"devSup.h"
+#include	"devSymb.h"
+#include	"epicsExport.h"
+#include	"longoutRecord.h"
 
 static long init_record();
 static long write_longout();
@@ -47,7 +45,7 @@ struct {
 	NULL,
 	write_longout};
 epicsExportAddress( dset, devLoSymb );
- 
+
 
 static long init_record(plongout)
     struct longoutRecord	*plongout;
@@ -60,7 +58,7 @@ static long init_record(plongout)
         return(S_db_badField);
     }
 
-    return(0);		
+    return(0);
 }
 
 static long write_longout(plongout)

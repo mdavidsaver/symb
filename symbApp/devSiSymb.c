@@ -9,78 +9,53 @@
 
 /* $Id$ */
 
+#include <vxWorks.h>
+#include <intLib.h>
+#include <string.h>
 
-#include	<vxWorks.h>
-#include	<sysSymTbl.h>
-#include	<types.h>
-#include	<stdioLib.h>
-#include	<string.h>
-#include	<intLib.h>
+#include "dbDefs.h"
+#include "dbAccess.h"
+#include "recGbl.h"
+#include "devSup.h"
+#include "stringinRecord.h"
+#include "epicsExport.h"
+#include "devSymb.h"
 
-#include	<alarm.h>
-#include	<dbDefs.h>
-#include	<dbAccess.h>
-#include	<recSup.h>
-#include	<recGbl.h>
-#include	<devSup.h>
-#include	<stringinRecord.h>
-#include	<devSymb.h>
-#include	<epicsExport.h>
-
-/* Create the dset for devSiSymb */
-static long init_record();
-static long read_stringin();
-
-struct {
-	long		number;
-	DEVSUPFUN	report;
-	DEVSUPFUN	init;
-	DEVSUPFUN	init_record;
-	DEVSUPFUN	get_ioint_info;
-	DEVSUPFUN	read_stringin;
-}devSiSymb={
-	5,
-	NULL,
-	NULL,
-	init_record,
-	NULL,
-	read_stringin};
-epicsExportAddress( dset, devSiSymb );
-
-
-static long init_record(pstringin)
-    struct stringinRecord	*pstringin;
-{
-    /* determine address of record value */
-    if (devSymbFind(pstringin->name, &pstringin->inp, &pstringin->dpvt))
-    {
+static long init_record(struct stringinRecord *pstringin) {
+    if (devSymbFind(&pstringin->inp, &pstringin->dpvt)) {
         recGblRecordError(S_db_badField,(void *)pstringin,
             "devSiSymb (init_record) Illegal NAME or INP field");
-        return(S_db_badField);
+        return S_db_badField;
     }
-
-    return(0);		
+    return OK;
 }
 
-static long read_stringin(pstringin)
-    struct stringinRecord	*pstringin;
-{
-	int lockKey;
-    long status;
+static long read_stringin(struct stringinRecord *pstringin) {
     struct vxSym *private = (struct vxSym *) pstringin->dpvt;
-
-    if (private)
-    {
-        pstringin->val[39] = '\0';
-	    lockKey = intLock();
+    if (private) {
+        int lockKey = intLock();
         strncpy(pstringin->val, (char *)(*private->ppvar) + private->index, 39);
         intUnlock(lockKey);
-        status = 0;
+        pstringin->val[39] = '\0';
+        pstringin->udf = FALSE;
+        return OK;
     }
-    else 
-        status = 1;
-
-    if(RTN_SUCCESS(status)) pstringin->udf=FALSE;
-
-    return(status);
+    return ERROR;
 }
+
+static struct {
+    long      number;
+    DEVSUPFUN report;
+    DEVSUPFUN init;
+    DEVSUPFUN init_record;
+    DEVSUPFUN get_ioint_info;
+    DEVSUPFUN read_stringin;
+} devSiSymb = {
+    5,
+    NULL,
+    NULL,
+    init_record,
+    NULL,
+    read_stringin};
+
+epicsExportAddress(dset, devSiSymb);

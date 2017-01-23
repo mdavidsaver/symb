@@ -9,76 +9,74 @@
 
 /* $Id$ */
 
-#include	<vxWorks.h>
-#include	<sysSymTbl.h>
-#include	<types.h>
-#include	<stdioLib.h>
-#include	<string.h>
-#include	<intLib.h>
+#include <vxWorks.h>
+#include <intLib.h>
 
-#include	<alarm.h>
-#include	<dbDefs.h>
-#include	<dbAccess.h>
-#include	<recSup.h>
-#include	<recGbl.h>
-#include	<devSup.h>
-#include	<mbbiRecord.h>
-#include	<devSymb.h>
-#include	<epicsExport.h>
+#include "dbDefs.h"
+#include "dbAccess.h"
+#include "recGbl.h"
+#include "devSup.h"
+#include "devSymb.h"
+#include "epicsExport.h"
+#include "mbbiRecord.h"
 
-/* Create the dset for devMbbiSymb */
-static long init_record();
-static long read_mbbi();
+struct mbbi_DSET {
+    long      number;
+    DEVSUPFUN report;
+    DEVSUPFUN init;
+    DEVSUPFUN init_record;
+    DEVSUPFUN get_ioint_info;
+    DEVSUPFUN read_mbbi;
+};
 
-struct {
-	long		number;
-	DEVSUPFUN	report;
-	DEVSUPFUN	init;
-	DEVSUPFUN	init_record;
-	DEVSUPFUN	get_ioint_info;
-	DEVSUPFUN	read_mbbi;
-}devMbbiSymb={
-	5,
-	NULL,
-	NULL,
-	init_record,
-	NULL,
-	read_mbbi};
-epicsExportAddress( dset, devMbbiSymb );
-
-
-static long init_record(pmbbi)
-    struct mbbiRecord	*pmbbi;
-{
-    /* determine address of record value */
-    if (devSymbFind(pmbbi->name, &pmbbi->inp, &pmbbi->dpvt))
-    {
-        recGblRecordError(S_db_badField,(void *)pmbbi,
+static long init_record(struct mbbiRecord *pmbbi) {
+    if (devSymbFind(&pmbbi->inp, &pmbbi->dpvt)) {
+        recGblRecordError(S_db_badField, (void *)pmbbi,
             "devMbbiSymb (init_record) Illegal NAME or INP field");
-        return(S_db_badField);
+        return S_db_badField;
     }
-
-    return(0);		
+    return OK;
 }
 
-static long read_mbbi(pmbbi)
-    struct mbbiRecord	*pmbbi;
-{
-    int lockKey;
-    long status;
+static long read_mbbi(struct mbbiRecord *pmbbi) {
     struct vxSym *private = (struct vxSym *) pmbbi->dpvt;
-
-    if (pmbbi->dpvt)
-    {
-        lockKey = intLock();
-        pmbbi->val = *((long *)(*private->ppvar) + private->index);
+    if (private) {
+        int lockKey = intLock();
+        pmbbi->val = *((unsigned short *)(*private->ppvar) + private->index);
         intUnlock(lockKey);
-        status = 0;
+        pmbbi->udf = FALSE;
+        return 2; /* Don't convert */
     }
-    else
-        status = 1;
-
-    if(RTN_SUCCESS(status)) pmbbi->udf=FALSE;
-
-    return(2); /*don't convert*/
+    return ERROR;
 }
+
+static long read_mbbiRaw(struct mbbiRecord *pmbbi) {
+    struct vxSym *private = (struct vxSym *) pmbbi->dpvt;
+    if (private) {
+        int lockKey = intLock();
+        pmbbi->rval = *((long *)(*private->ppvar) + private->index);
+        intUnlock(lockKey);
+        pmbbi->udf = FALSE;
+        return OK; /* Convert */
+    }
+    return ERROR;
+}
+
+static struct mbbi_DSET devMbbiSymb = {
+    5,
+    NULL,
+    NULL,
+    init_record,
+    NULL,
+    read_mbbi};
+
+static struct mbbi_DSET devMbbiSymbRaw = {
+    5,
+    NULL,
+    NULL,
+    init_record,
+    NULL,
+    read_mbbiRaw};
+
+epicsExportAddress(dset, devMbbiSymb);
+epicsExportAddress(dset, devMbbiSymbRaw);

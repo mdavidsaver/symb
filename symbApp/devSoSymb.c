@@ -17,15 +17,13 @@
 #include	<string.h>
 #include	<intLib.h>
 
-#include	<alarm.h>
-#include	<dbDefs.h>
-#include	<dbAccess.h>
-#include	<recSup.h>
-#include	<recGbl.h>
-#include	<devSup.h>
-#include	<stringoutRecord.h>
-#include	<devSymb.h>
-#include	<epicsExport.h>
+#include	"dbDefs.h"
+#include	"dbAccess.h"
+#include	"recGbl.h"
+#include	"devSup.h"
+#include	"stringoutRecord.h"
+#include	"epicsExport.h"
+#include	"devSymb.h"
 
 static long init_record();
 static long write_stringout();
