@@ -1,0 +1,9 @@
+
+record(ai, "test:ai:dbl") {
+    field(DTYP, "vxWorks Variable")
+    field(INP , "@test_double")
+}
+record(ao, "test:ao:dbl") {
+    field(DTYP, "vxWorks Variable")
+    field(OUT , "@test_double")
+}
