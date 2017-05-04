@@ -39,7 +39,7 @@ epicsExportAddress( dset, devLoSymb );
 static long init_record(struct longoutRecord	*plongout)
 {
     /* determine address of record value */
-    if (devSymbFind(plongout->name, &plongout->out, &plongout->dpvt))
+    if (devSymbFind(&plongout->out, &plongout->dpvt))
     {
         recGblRecordError(S_db_badField,(void *)plongout,
             "devLoSymb (init_record) Illegal NAME or OUT field");

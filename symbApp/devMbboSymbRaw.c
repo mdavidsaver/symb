@@ -43,7 +43,7 @@ epicsExportAddress(dset, devMbboSymbRaw);
 static long init_record(struct mbboRecord	*pmbbo)
 {
     /* determine address of record value */
-    if (devSymbFind(pmbbo->name, &pmbbo->out, &pmbbo->dpvt))
+    if (devSymbFind(&pmbbo->out, &pmbbo->dpvt))
     {
         recGblRecordError(S_db_badField,(void *)pmbbo,
             "devMbboSymbRaw (init_record) Illegal NAME or OUT field");
