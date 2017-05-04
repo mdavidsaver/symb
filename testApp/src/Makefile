@@ -3,7 +3,15 @@ include $(TOP)/configure/CONFIG
 #----------------------------------------
 #  ADD MACRO DEFINITIONS AFTER THIS LINE
 
-OBJS_vxWorks = devSymbTest.o
+USR_CPPFLAGS += -I$(TOP)/symbApp
+
+TESTPROD_HOST += testParse
+testParse_SRCS += testParse.c
+testParse_LIBS += Symb
+testParse_LIBS += $(EPICS_BASE_IOC_LIBS)
+TESTS += testParse
+
+TESTSCRIPTS_HOST += $(TESTS:%=%.t)
 
 include $(TOP)/configure/RULES
 #----------------------------------------
