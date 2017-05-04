@@ -65,13 +65,13 @@ static long write_stringout(pstringout)
     struct stringoutRecord	*pstringout;
 {
 	int lockKey;
-    struct vxSym *private = (struct vxSym *) pstringout->dpvt;
+    struct vxSym *priv = (struct vxSym *) pstringout->dpvt;
 
-    if (private)
+    if (priv)
     {
         pstringout->val[39] = '\0';
 	    lockKey = intLock();
-        strcpy((char *)(*private->ppvar) + private->index, pstringout->val);
+        strcpy((char *)(*priv->ppvar) + priv->index, pstringout->val);
         intUnlock(lockKey);
     }
     else 

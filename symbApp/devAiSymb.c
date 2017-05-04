@@ -46,10 +46,10 @@ static long init_record(struct aiRecord *pai) {
 }
 
 static long read_ai(struct aiRecord *pai) {
-    struct vxSym *private = (struct vxSym *) pai->dpvt;
-    if (private) {
+    struct vxSym *priv = (struct vxSym *) pai->dpvt;
+    if (priv) {
         int lockKey = intLock();
-        pai->val = *((double *)(*private->ppvar) + private->index);
+        pai->val = *((double *)(*priv->ppvar) + priv->index);
         intUnlock(lockKey);
         pai->udf = FALSE;
         return 2; /* Don't convert */
@@ -79,10 +79,10 @@ static long init_recordLong(struct aiRecord *pai) {
 }
 
 static long read_aiLong(struct aiRecord *pai) {
-    struct vxSym *private = (struct vxSym *) pai->dpvt;
-    if (private) {
+    struct vxSym *priv = (struct vxSym *) pai->dpvt;
+    if (priv) {
         int lockKey = intLock();
-        pai->rval = *((long *)(*private->ppvar) + private->index);
+        pai->rval = *((long *)(*priv->ppvar) + priv->index);
         intUnlock(lockKey);
         return OK; /* Convert */
     }
@@ -111,10 +111,10 @@ static long init_recordShort(struct aiRecord *pai) {
 }
 
 static long read_aiShort(struct aiRecord *pai) {
-    struct vxSym *private = (struct vxSym *) pai->dpvt;
-    if (private) {
+    struct vxSym *priv = (struct vxSym *) pai->dpvt;
+    if (priv) {
         int lockKey = intLock();
-        pai->rval = *((short *)(*private->ppvar) + private->index);
+        pai->rval = *((short *)(*priv->ppvar) + priv->index);
         intUnlock(lockKey);
         return OK; /* Convert */
     }

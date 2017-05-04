@@ -35,23 +35,23 @@ struct ao_DSET {
  */
 
 static long init_record(struct aoRecord *pao) {
-    struct vxSym *private;
+    struct vxSym *priv;
     if (devSymbFind(&pao->out, &pao->dpvt)) {
         recGblRecordError(S_db_badField, (void *)pao,
             "devAoSymb (init_record) Illegal NAME or OUT field");
         return S_db_badField;
     }
-    private = (struct vxSym *) pao->dpvt;
-    if (private->ppvar != NULL)
-        pao->val = *((double *)(*private->ppvar) + private->index);
+    priv = (struct vxSym *) pao->dpvt;
+    if (priv->ppvar != NULL)
+        pao->val = *((double *)(*priv->ppvar) + priv->index);
     return 2; /* Don't convert */
 }
 
 static long write_ao(struct aoRecord *pao) {
-    struct vxSym *private = (struct vxSym *) pao->dpvt;
-    if (private) {
+    struct vxSym *priv = (struct vxSym *) pao->dpvt;
+    if (priv) {
        int lockKey = intLock();
-       *((double *)(*private->ppvar) + private->index) = pao->oval;
+       *((double *)(*priv->ppvar) + priv->index) = pao->oval;
        intUnlock(lockKey);
        return OK;
     }

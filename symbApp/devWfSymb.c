@@ -32,12 +32,12 @@ static long init_record(struct waveformRecord *pwf) {
 }
 
 static long read_wf(struct waveformRecord *pwf) {
-    struct vxSym *private = (struct vxSym *) pwf->dpvt;
-    if (private) {
+    struct vxSym *priv = (struct vxSym *) pwf->dpvt;
+    if (priv) {
         int typesize = sizeofTypes[pwf->ftvl];
         int lockKey = intLock();
         memcpy(pwf->bptr, 
-               (char *)(*private->ppvar) + typesize * private->index, 
+               (char *)(*priv->ppvar) + typesize * priv->index, 
                pwf->nelm * typesize);
         intUnlock(lockKey);
         pwf->nord = pwf->nelm; /* We always get it all */

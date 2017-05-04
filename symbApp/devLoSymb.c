@@ -64,13 +64,13 @@ static long init_record(plongout)
 static long write_longout(plongout)
     struct longoutRecord	*plongout;
 {
-    struct vxSym *private = (struct vxSym *) plongout->dpvt;
+    struct vxSym *priv = (struct vxSym *) plongout->dpvt;
 	int lockKey;
 
-    if (private)
+    if (priv)
 	{
 	   lockKey = intLock();
-       *((long *)(*private->ppvar) + private->index) = plongout->val;
+       *((long *)(*priv->ppvar) + priv->index) = plongout->val;
 	   intUnlock(lockKey);
 	}
     else

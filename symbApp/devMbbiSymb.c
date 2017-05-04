@@ -39,10 +39,10 @@ static long init_record(struct mbbiRecord *pmbbi) {
 }
 
 static long read_mbbi(struct mbbiRecord *pmbbi) {
-    struct vxSym *private = (struct vxSym *) pmbbi->dpvt;
-    if (private) {
+    struct vxSym *priv = (struct vxSym *) pmbbi->dpvt;
+    if (priv) {
         int lockKey = intLock();
-        pmbbi->val = *((unsigned short *)(*private->ppvar) + private->index);
+        pmbbi->val = *((unsigned short *)(*priv->ppvar) + priv->index);
         intUnlock(lockKey);
         pmbbi->udf = FALSE;
         return 2; /* Don't convert */
@@ -51,10 +51,10 @@ static long read_mbbi(struct mbbiRecord *pmbbi) {
 }
 
 static long read_mbbiRaw(struct mbbiRecord *pmbbi) {
-    struct vxSym *private = (struct vxSym *) pmbbi->dpvt;
-    if (private) {
+    struct vxSym *priv = (struct vxSym *) pmbbi->dpvt;
+    if (priv) {
         int lockKey = intLock();
-        pmbbi->rval = *((long *)(*private->ppvar) + private->index);
+        pmbbi->rval = *((long *)(*priv->ppvar) + priv->index);
         intUnlock(lockKey);
         pmbbi->udf = FALSE;
         return OK; /* Convert */

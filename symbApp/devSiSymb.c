@@ -31,10 +31,10 @@ static long init_record(struct stringinRecord *pstringin) {
 }
 
 static long read_stringin(struct stringinRecord *pstringin) {
-    struct vxSym *private = (struct vxSym *) pstringin->dpvt;
-    if (private) {
+    struct vxSym *priv = (struct vxSym *) pstringin->dpvt;
+    if (priv) {
         int lockKey = intLock();
-        strncpy(pstringin->val, (char *)(*private->ppvar) + private->index, 39);
+        strncpy(pstringin->val, (char *)(*priv->ppvar) + priv->index, 39);
         intUnlock(lockKey);
         pstringin->val[39] = '\0';
         pstringin->udf = FALSE;

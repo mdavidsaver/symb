@@ -57,10 +57,10 @@ static long init_record(pmbbo)
 static long write_mbbo(pmbbo)
     struct mbboRecord	*pmbbo;
 {
-    struct vxSym *private = (struct vxSym *) pmbbo->dpvt;
+    struct vxSym *priv = (struct vxSym *) pmbbo->dpvt;
     
-    if (private)
-       *((long *)(*private->ppvar) + private->index) = pmbbo->rval;
+    if (priv)
+       *((long *)(*priv->ppvar) + priv->index) = pmbbo->rval;
     else
        return(1);
 

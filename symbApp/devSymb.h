@@ -10,7 +10,7 @@
 /* $Id$ */
 
 
-/* This is the device private structure */
+/* This is the device priv structure */
 
 struct vxSym {
     void **ppvar;

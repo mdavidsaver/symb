@@ -29,10 +29,10 @@ static long init_record(struct longinRecord *plongin) {
 }
 
 static long read_longin(struct longinRecord *plongin) {
-    struct vxSym *private = (struct vxSym *) plongin->dpvt;
-    if (private) {
+    struct vxSym *priv = (struct vxSym *) plongin->dpvt;
+    if (priv) {
         int lockKey = intLock();
-        plongin->val = *((long *)(*private->ppvar) + private->index);
+        plongin->val = *((long *)(*priv->ppvar) + priv->index);
         intUnlock(lockKey);
         return OK;
     }

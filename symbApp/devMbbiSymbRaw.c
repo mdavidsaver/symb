@@ -64,11 +64,11 @@ static long read_mbbi(pmbbi)
     struct mbbiRecord	*pmbbi;
 {
     long status;
-    struct vxSym *private = (struct vxSym *) pmbbi->dpvt;
+    struct vxSym *priv = (struct vxSym *) pmbbi->dpvt;
 
     if (pmbbi->dpvt)
     {
-       pmbbi->rval = *((long *)(*private->ppvar) + private->index);
+       pmbbi->rval = *((long *)(*priv->ppvar) + priv->index);
        status = 0;
     }
     else

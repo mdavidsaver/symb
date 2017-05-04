@@ -29,10 +29,10 @@ static long init_record(struct biRecord *pbi) {
 }
 
 static long read_bi(struct biRecord *pbi) {
-    struct vxSym *private = (struct vxSym *) pbi->dpvt;
-    if (private) {
+    struct vxSym *priv = (struct vxSym *) pbi->dpvt;
+    if (priv) {
         int lockKey = intLock();
-        pbi->val = *((unsigned short *)(*private->ppvar) + private->index);
+        pbi->val = *((unsigned short *)(*priv->ppvar) + priv->index);
         intUnlock(lockKey);
         pbi->udf = FALSE;
         return 2; /* Don't convert */

@@ -56,7 +56,6 @@ starts at the third character of the string.
 
 */
 
-#include <vxWorks.h>
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -64,7 +63,10 @@ starts at the third character of the string.
 
 #include "dbDefs.h"
 #include "link.h"
+
+#ifdef vxWorks
 #include "epicsDynLink.h"
+#endif
 
 #include "devSymb.h"
 
@@ -81,7 +83,7 @@ int devSymbFind(struct link *plink, void *pdpvt)
     int  index;
     SYM_TYPE stype;
     void *paddr;
-    struct vxSym *private;
+    struct vxSym *priv;
     struct vxSym **pprivate = (struct vxSym **) pdpvt;
     struct instio *pinstio;
 
@@ -97,25 +99,25 @@ int devSymbFind(struct link *plink, void *pdpvt)
     if (symFindByNameEPICS(sysSymTbl, nptr, (char **) &paddr, &stype))
 	return ERROR;
 
-    /* Name exists, allocate a private structure */
-    private = (struct vxSym *) malloc(sizeof (struct vxSym));
-    if (private == NULL)
+    /* Name exists, allocate a priv structure */
+    priv = (struct vxSym *) malloc(sizeof (struct vxSym));
+    if (priv == NULL)
     	return ERROR;
     
     /* Fill in the fields */
-    private->index = index;
+    priv->index = index;
     
     /* Setup pointers to the found symbol address */
     if (deref) {
-	private->ppvar = paddr;
-	/* private->pvar is not needed with deref symbols */
+    priv->ppvar = paddr;
+    /* priv->pvar is not needed with deref symbols */
     } else {
-    	private->ppvar = &private->pvar;
-    	private->pvar = paddr;
+        priv->ppvar = &priv->pvar;
+        priv->pvar = paddr;
     }
 
-    /* Pass new private structure back to caller */
-    *pprivate = private;
+    /* Pass new priv structure back to caller */
+    *pprivate = priv;
 
     return OK;
 }

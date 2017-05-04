@@ -20,23 +20,23 @@
 #include "boRecord.h"
 
 static long init_record(struct boRecord *pbo) {
-    struct vxSym *private;
+    struct vxSym *priv;
     if (devSymbFind(&pbo->out, &pbo->dpvt)) {
         recGblRecordError(S_db_badField, (void *)pbo,
             "devBoSymb (init_record) Illegal NAME or OUT field");
         return S_db_badField;
     }
-    private = (struct vxSym *) pbo->dpvt;
-    if (private->ppvar != NULL)
-        pbo->rval = *((unsigned short *)(*private->ppvar) + private->index);
+    priv = (struct vxSym *) pbo->dpvt;
+    if (priv->ppvar != NULL)
+        pbo->rval = *((unsigned short *)(*priv->ppvar) + priv->index);
     return OK;
 }
 
 static long write_bo(struct boRecord *pbo) {
-    struct vxSym *private = (struct vxSym *) pbo->dpvt;
-    if (private) {
+    struct vxSym *priv = (struct vxSym *) pbo->dpvt;
+    if (priv) {
         int lockKey = intLock();
-        *((unsigned short *)(*private->ppvar) + private->index) = pbo->rval;
+        *((unsigned short *)(*priv->ppvar) + priv->index) = pbo->rval;
         intUnlock(lockKey);
         return OK;
     }

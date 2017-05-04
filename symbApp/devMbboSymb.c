@@ -65,12 +65,12 @@ static long write_mbbo(pmbbo)
     struct mbboRecord	*pmbbo;
 {
     int lockKey;
-    struct vxSym *private = (struct vxSym *) pmbbo->dpvt;
+    struct vxSym *priv = (struct vxSym *) pmbbo->dpvt;
     
-    if (private)
+    if (priv)
     {
         lockKey = intLock();
-        *((long *)(*private->ppvar) + private->index) = pmbbo->val;
+        *((long *)(*priv->ppvar) + priv->index) = pmbbo->val;
         intUnlock(lockKey);
     }
     else
