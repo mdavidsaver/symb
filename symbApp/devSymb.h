@@ -15,12 +15,22 @@
 #include	<stdio.h>
 #include	<string.h>
 
+#ifdef epicsExportSharedSymbols
+#   define devSymb_epicsExportSharedSymbols
+#   undef epicsExportSharedSymbols
+#endif
+
 #include	<dbDefs.h>
 #include	<dbAccess.h>
 #include	<recGbl.h>
 #include	<devSup.h>
 #include    <epicsInterrupt.h>
 #include	<epicsExport.h>
+
+#ifdef devSymb_epicsExportSharedSymbols
+#   define epicsExportSharedSymbols
+#   include <shareLib.h>
+#endif
 
 
 /* This is the device priv structure */
@@ -34,6 +44,7 @@ struct vxSym {
 
 /* This is the call to create it */
 
-extern int devSymbFind(struct link *plink, void **pdpvt);
+epicsShareFunc int devSymbFind(struct link *plink, void **pdpvt);
+epicsShareFunc int parseInstio(char *string, int *deref, char **name, int *index);
 
 #endif /* DEVSYMB_H */

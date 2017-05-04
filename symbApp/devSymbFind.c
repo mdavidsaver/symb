@@ -61,10 +61,8 @@ starts at the third character of the string.
 #include <link.h>
 #include <epicsFindSymbol.h>
 
+#define epicsExportSharedSymbols
 #include "devSymb.h"
-
-/* forward references */
-static int parseInstio(char *string, int *deref, char **name, int *index);
 
 /*
  * Determine vxWorks variable name and return address of data
@@ -118,7 +116,7 @@ int devSymbFind(struct link *plink, void **pdpvt)
 /*
  * Parse string of the form ["*"]name["["index"]"] (white space is ignored).
  */
-static int parseInstio(char *string, int *deref, char **name, int *index)
+int parseInstio(char *string, int *deref, char **name, int *index)
 {
     static char pname[256];
     char *begin;
@@ -190,32 +188,3 @@ static int parseInstio(char *string, int *deref, char **name, int *index)
 
     return 0;
 }
-
-#ifdef TEST
-/*
- * Optional routine for testing parsing routines
- */
-int test(char *string)
-{
-    int  error;
-    int  deref;
-    char *nptr;
-    int  index;
-    char *addr;
-    SYM_TYPE stype;
-
-    printf( "instio: %s -> ", string);
-    error = parseInstio(string, &deref, &nptr, &index);
-    printf("%s: ", error ? "error" : "ok" );
-    printf("deref=%d, name=%s, index=%d", deref, nptr, index);
-    if (!symFindByNameEPICS(sysSymTbl, nptr, &addr, &stype))
-    {
-	if (deref) addr = *((char **)addr);
-	addr += sizeof(long) * index;
-	printf(" -> value = %d", *(long *)addr);
-    }
-    printf("\n");
-
-    return 0;
-}
-#endif /* TEST */
