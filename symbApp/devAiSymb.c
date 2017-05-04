@@ -47,6 +47,7 @@ static long read_ai(struct aiRecord *prec) {
         prec->udf = FALSE;
         return 2; /* Don't convert */
     }
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
     return 1;
 }
 
@@ -79,6 +80,7 @@ static long read_aiLong(struct aiRecord *prec) {
         epicsInterruptUnlock(lockKey);
         return 0; /* Convert */
     }
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
     return 1;
 }
 
@@ -111,6 +113,7 @@ static long read_aiShort(struct aiRecord *prec) {
         epicsInterruptUnlock(lockKey);
         return 0; /* Convert */
     }
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
     return 1;
 }
 

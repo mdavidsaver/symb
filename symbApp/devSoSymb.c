@@ -60,8 +60,10 @@ static long write_stringout(struct stringoutRecord	*prec)
         strcpy(SYMADDR(char, priv), prec->val);
         epicsInterruptUnlock(lockKey);
     }
-    else
-        return(1);
+    else {
+        (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+        return 1;
+    }
 
     prec->udf = FALSE;
 

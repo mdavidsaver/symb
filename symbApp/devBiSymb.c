@@ -31,6 +31,7 @@ static long read_bi(struct biRecord *prec) {
         prec->udf = FALSE;
         return 2; /* Don't convert */
     }
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
     return 1;
 }
 

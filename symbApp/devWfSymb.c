@@ -36,6 +36,7 @@ static long read_wf(struct waveformRecord *prec) {
         prec->nord = prec->nelm; /* We always get it all */
         return 0;
     }
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
     return 1;
 }
 

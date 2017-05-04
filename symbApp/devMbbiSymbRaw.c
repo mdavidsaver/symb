@@ -58,8 +58,10 @@ static long read_mbbi(struct mbbiRecord	*prec)
        prec->rval = *SYMADDR(long, priv);
        status = 0;
     }
-    else
-       status = 1;
+    else {
+        (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+        status = 1;
+    }
 
     return(0);
 }

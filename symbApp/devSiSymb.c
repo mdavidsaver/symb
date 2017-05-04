@@ -31,6 +31,7 @@ static long read_stringin(struct stringinRecord *prec) {
         prec->udf = FALSE;
         return 0;
     }
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
     return 1;
 }
 

@@ -47,8 +47,8 @@ static long write_ao(struct aoRecord *prec) {
        *SYMADDR(double, priv) = prec->oval;
        epicsInterruptUnlock(lockKey);
        return 0;
-    } else
-        (void)recGblSetSevr(pai, COMM_ALARM, INVALID_ALARM);
+    }
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
     return 1;
 }
 

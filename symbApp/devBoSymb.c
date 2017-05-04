@@ -34,6 +34,7 @@ static long write_bo(struct boRecord *prec) {
         epicsInterruptUnlock(lockKey);
         return 0;
     }
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
     return 1;
 }
 

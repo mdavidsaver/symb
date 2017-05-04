@@ -30,6 +30,7 @@ static long read_longin(struct longinRecord *prec) {
         epicsInterruptUnlock(lockKey);
         return 0;
     }
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
     return 1;
 }
 

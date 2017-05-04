@@ -59,8 +59,10 @@ static long write_mbbo(struct mbboRecord	*prec)
     
     if (priv)
        *SYMADDR(long, priv) = prec->rval;
-    else
-       return(1);
+    else {
+        (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+        return 1;
+    }
 
     prec->udf=FALSE;
 
