@@ -37,7 +37,7 @@ static void testFind(const char *inp, const void *expectAddr)
 
 MAIN(testInit)
 {
-    testPlan(9);
+    testPlan(10);
 
     /* make direct use of test globals to ensure that the linker
      * keeps them
@@ -57,6 +57,9 @@ MAIN(testInit)
     testFind("*baz", &baz[0]);
     testFind("*baz[0]", &baz[0]);
     testFind("*baz[1]", &baz[1]);
+
+    testDiag("lookup aliased symbol w/ symbInfoByName()");
+    testFind("bar_alias", &bar);
 
     free(baz);
 

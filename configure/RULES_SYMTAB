@@ -1,0 +1,4 @@
+PYTHON ?= python
+
+%.syms.c: ../%.syms.txt
+	$(PYTHON) $(DEVSYMB)/bin/$(EPICS_HOST_ARCH)/genSymTable.py $@ $<

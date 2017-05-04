@@ -20,6 +20,13 @@ Symb_SRCS += devSoSymb.c
 Symb_SRCS += devSymbFind.c
 Symb_SRCS += devWfSymb.c
 
+
+INC += devSymbTable.h
+
+Symb_SRCS += devSymbTable.c
+
 LIBRARY_IOC = Symb
+
+SCRIPTS_HOST += genSymTable.py
 
 include $(TOP)/configure/RULES

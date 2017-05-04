@@ -1,0 +1,5 @@
+# comment
+ # another
+
+bar_alias = bar #c
+

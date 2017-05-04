@@ -14,7 +14,9 @@ TESTS += testParse
 
 TESTPROD_HOST += testInit
 testInit_SRCS += testInit.c
+testInit_SRCS += testInit.syms.c
 testHarness_SRCS += testInit.c
+testHarness_SRCS += testInit.syms.c
 testInit_LIBS += Symb
 testInit_LIBS += $(EPICS_BASE_IOC_LIBS)
 TESTS += testInit
@@ -47,6 +49,11 @@ symbTestHarness_SRCS += $(testHarness_SRCS)
 
 PROD_vxWorks = symbTestHarness
 
+# external modules will place this line in configure/RELEASE
+DEVSYMB = $(TOP)
+
 include $(TOP)/configure/RULES
+# include rules for generating symbol table
+include $(DEVSYMB)/configure/RULES_SYMTAB
 #----------------------------------------
 #  ADD RULES AFTER THIS LINE

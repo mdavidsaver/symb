@@ -63,7 +63,7 @@ starts at the third character of the string.
 
 #define epicsExportSharedSymbols
 #include "devSymb.h"
-
+#include "devSymbTable.h"
 /*
  * Determine vxWorks variable name and return address of data
  */
@@ -87,6 +87,11 @@ int devSymbFind(struct link *plink, void **pdpvt)
     return 1;
 
     paddr = epicsFindSymbol(nptr);
+    if(!paddr) {
+        const symbInfo *info = symbInfoByName(nptr);
+        if(info)
+            paddr = info->addr;
+    }
     if(!paddr)
         return 1;
 
