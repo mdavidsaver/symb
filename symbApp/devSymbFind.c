@@ -56,12 +56,8 @@ starts at the third character of the string.
 
 */
 
-#include <ctype.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "devSymb.h"
 
-#include "dbDefs.h"
 #include "link.h"
 
 #ifdef vxWorks

@@ -9,11 +9,8 @@
 
 /* $Id$ */
 
-#include "dbAccess.h"
-#include "recGbl.h"
-#include "devSup.h"
 #include "devSymb.h"
-#include "epicsExport.h"
+
 #include "biRecord.h"
 
 static long init_record(struct biRecord *pbi) {
@@ -28,9 +25,9 @@ static long init_record(struct biRecord *pbi) {
 static long read_bi(struct biRecord *pbi) {
     struct vxSym *priv = (struct vxSym *) pbi->dpvt;
     if (priv) {
-        int lockKey = intLock();
+        int lockKey = epicsInterruptLock();
         pbi->val = *((unsigned short *)(*priv->ppvar) + priv->index);
-        intUnlock(lockKey);
+        epicsInterruptUnlock(lockKey);
         pbi->udf = FALSE;
         return 2; /* Don't convert */
     }

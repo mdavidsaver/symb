@@ -9,16 +9,8 @@
 
 /* $Id$ */
 
+#include "devSymb.h"
 
-#include	<stdio.h>
-#include	<string.h>
-
-#include	"dbDefs.h"
-#include	"dbAccess.h"
-#include	"recGbl.h"
-#include	"devSup.h"
-#include	"stringoutRecord.h"
-#include	"epicsExport.h"
 #include	"devSymb.h"
 
 static long init_record();
@@ -66,9 +58,9 @@ static long write_stringout(pstringout)
     if (priv)
     {
         pstringout->val[39] = '\0';
-	    lockKey = intLock();
+        lockKey = epicsInterruptLock();
         strcpy((char *)(*priv->ppvar) + priv->index, pstringout->val);
-        intUnlock(lockKey);
+        epicsInterruptUnlock(lockKey);
     }
     else 
         return(1);

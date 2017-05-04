@@ -11,13 +11,8 @@
 
 #include <limits.h>
 
-#include "dbDefs.h"
-#include "dbAccess.h"
-#include "recGbl.h"
-#include "devSup.h"
 #include "devSymb.h"
-#include "epicsExport.h"
-#include "aiRecord.h"
+#include <aiRecord.h>
 
 struct ai_DSET {
     long      number;
@@ -46,9 +41,9 @@ static long init_record(struct aiRecord *pai) {
 static long read_ai(struct aiRecord *pai) {
     struct vxSym *priv = (struct vxSym *) pai->dpvt;
     if (priv) {
-        int lockKey = intLock();
+        int lockKey = epicsInterruptLock();
         pai->val = *((double *)(*priv->ppvar) + priv->index);
-        intUnlock(lockKey);
+        epicsInterruptUnlock(lockKey);
         pai->udf = FALSE;
         return 2; /* Don't convert */
     }
@@ -79,9 +74,9 @@ static long init_recordLong(struct aiRecord *pai) {
 static long read_aiLong(struct aiRecord *pai) {
     struct vxSym *priv = (struct vxSym *) pai->dpvt;
     if (priv) {
-        int lockKey = intLock();
+        int lockKey = epicsInterruptLock();
         pai->rval = *((long *)(*priv->ppvar) + priv->index);
-        intUnlock(lockKey);
+        epicsInterruptUnlock(lockKey);
         return 0; /* Convert */
     }
     return 1;
@@ -111,9 +106,9 @@ static long init_recordShort(struct aiRecord *pai) {
 static long read_aiShort(struct aiRecord *pai) {
     struct vxSym *priv = (struct vxSym *) pai->dpvt;
     if (priv) {
-        int lockKey = intLock();
+        int lockKey = epicsInterruptLock();
         pai->rval = *((short *)(*priv->ppvar) + priv->index);
-        intUnlock(lockKey);
+        epicsInterruptUnlock(lockKey);
         return 0; /* Convert */
     }
     return 1;

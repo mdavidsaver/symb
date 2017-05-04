@@ -9,11 +9,8 @@
 
 /* $Id$ */
 
-#include "dbAccess.h"
-#include "recGbl.h"
-#include "devSup.h"
 #include "devSymb.h"
-#include "epicsExport.h"
+
 #include "waveformRecord.h"
 
 static int sizeofTypes[] = {MAX_STRING_SIZE,1,1,2,2,4,4,4,8,2};
@@ -31,11 +28,11 @@ static long read_wf(struct waveformRecord *pwf) {
     struct vxSym *priv = (struct vxSym *) pwf->dpvt;
     if (priv) {
         int typesize = sizeofTypes[pwf->ftvl];
-        int lockKey = intLock();
+        int lockKey = epicsInterruptLock();
         memcpy(pwf->bptr, 
                (char *)(*priv->ppvar) + typesize * priv->index, 
                pwf->nelm * typesize);
-        intUnlock(lockKey);
+        epicsInterruptUnlock(lockKey);
         pwf->nord = pwf->nelm; /* We always get it all */
         return 0;
     }

@@ -9,11 +9,8 @@
 
 /* $Id$ */
 
-#include "dbAccess.h"
-#include "recGbl.h"
-#include "devSup.h"
 #include "devSymb.h"
-#include "epicsExport.h"
+
 #include "longinRecord.h"
 
 static long init_record(struct longinRecord *plongin) {
@@ -28,9 +25,9 @@ static long init_record(struct longinRecord *plongin) {
 static long read_longin(struct longinRecord *plongin) {
     struct vxSym *priv = (struct vxSym *) plongin->dpvt;
     if (priv) {
-        int lockKey = intLock();
+        int lockKey = epicsInterruptLock();
         plongin->val = *((long *)(*priv->ppvar) + priv->index);
-        intUnlock(lockKey);
+        epicsInterruptUnlock(lockKey);
         return 0;
     }
     return 1;

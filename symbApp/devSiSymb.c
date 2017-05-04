@@ -9,14 +9,6 @@
 
 /* $Id$ */
 
-#include <string.h>
-
-#include "dbDefs.h"
-#include "dbAccess.h"
-#include "recGbl.h"
-#include "devSup.h"
-#include "stringinRecord.h"
-#include "epicsExport.h"
 #include "devSymb.h"
 
 static long init_record(struct stringinRecord *pstringin) {
@@ -31,9 +23,9 @@ static long init_record(struct stringinRecord *pstringin) {
 static long read_stringin(struct stringinRecord *pstringin) {
     struct vxSym *priv = (struct vxSym *) pstringin->dpvt;
     if (priv) {
-        int lockKey = intLock();
+        int lockKey = epicsInterruptLock();
         strncpy(pstringin->val, (char *)(*priv->ppvar) + priv->index, 39);
-        intUnlock(lockKey);
+        epicsInterruptUnlock(lockKey);
         pstringin->val[39] = '\0';
         pstringin->udf = FALSE;
         return 0;

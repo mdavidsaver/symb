@@ -10,15 +10,8 @@
 /* $Id$ */
 
 
-#include	<stdio.h>
-#include	<string.h>
+#include "devSymb.h"
 
-#include	"dbDefs.h"
-#include	"dbAccess.h"
-#include	"recGbl.h"
-#include	"devSup.h"
-#include	"devSymb.h"
-#include	"epicsExport.h"
 #include	"longoutRecord.h"
 
 static long init_record();
@@ -65,9 +58,9 @@ static long write_longout(plongout)
 
     if (priv)
 	{
-	   lockKey = intLock();
+       lockKey = epicsInterruptLock();
        *((long *)(*priv->ppvar) + priv->index) = plongout->val;
-	   intUnlock(lockKey);
+       epicsInterruptUnlock(lockKey);
 	}
     else
        return(1);

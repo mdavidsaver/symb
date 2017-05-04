@@ -9,18 +9,10 @@
 
 /* $Id$ */
 
-#include	<stdio.h>
-#include	<string.h>
+#include "devSymb.h"
 
-#include	<alarm.h>
-#include	<dbDefs.h>
-#include	<dbAccess.h>
-#include        <recSup.h>
-#include	<recGbl.h>
-#include	<devSup.h>
 #include	<mbbiRecord.h>
-#include	<devSymb.h>
-#include	<epicsExport.h>
+
 
 /* Create the dset for devMbbiSymbRaw */
 static long init_record();

@@ -9,12 +9,8 @@
 
 /* $Id$ */
 
-#include "dbDefs.h"
-#include "dbAccess.h"
-#include "recGbl.h"
-#include "devSup.h"
 #include "devSymb.h"
-#include "epicsExport.h"
+
 #include "mbbiRecord.h"
 
 struct mbbi_DSET {
@@ -38,9 +34,9 @@ static long init_record(struct mbbiRecord *pmbbi) {
 static long read_mbbi(struct mbbiRecord *pmbbi) {
     struct vxSym *priv = (struct vxSym *) pmbbi->dpvt;
     if (priv) {
-        int lockKey = intLock();
+        int lockKey = epicsInterruptLock();
         pmbbi->val = *((unsigned short *)(*priv->ppvar) + priv->index);
-        intUnlock(lockKey);
+        epicsInterruptUnlock(lockKey);
         pmbbi->udf = FALSE;
         return 2; /* Don't convert */
     }
@@ -50,9 +46,9 @@ static long read_mbbi(struct mbbiRecord *pmbbi) {
 static long read_mbbiRaw(struct mbbiRecord *pmbbi) {
     struct vxSym *priv = (struct vxSym *) pmbbi->dpvt;
     if (priv) {
-        int lockKey = intLock();
+        int lockKey = epicsInterruptLock();
         pmbbi->rval = *((long *)(*priv->ppvar) + priv->index);
-        intUnlock(lockKey);
+        epicsInterruptUnlock(lockKey);
         pmbbi->udf = FALSE;
         return 0; /* Convert */
     }

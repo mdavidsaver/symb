@@ -9,11 +9,8 @@
 
 /* $Id$ */
 
-#include "dbAccess.h"
-#include "recGbl.h"
-#include "devSup.h"
 #include "devSymb.h"
-#include "epicsExport.h"
+
 #include "boRecord.h"
 
 static long init_record(struct boRecord *pbo) {
@@ -32,9 +29,9 @@ static long init_record(struct boRecord *pbo) {
 static long write_bo(struct boRecord *pbo) {
     struct vxSym *priv = (struct vxSym *) pbo->dpvt;
     if (priv) {
-        int lockKey = intLock();
+        int lockKey = epicsInterruptLock();
         *((unsigned short *)(*priv->ppvar) + priv->index) = pbo->rval;
-        intUnlock(lockKey);
+        epicsInterruptUnlock(lockKey);
         return 0;
     }
     return 1;

@@ -9,12 +9,8 @@
 
 /* $Id$ */
 
-#include "dbDefs.h"
-#include "dbAccess.h"
-#include "recGbl.h"
-#include "devSup.h"
 #include "devSymb.h"
-#include "epicsExport.h"
+
 #include "aoRecord.h"
 
 struct ao_DSET {
@@ -47,9 +43,9 @@ static long init_record(struct aoRecord *pao) {
 static long write_ao(struct aoRecord *pao) {
     struct vxSym *priv = (struct vxSym *) pao->dpvt;
     if (priv) {
-       int lockKey = intLock();
+       int lockKey = epicsInterruptLock();
        *((double *)(*priv->ppvar) + priv->index) = pao->oval;
-       intUnlock(lockKey);
+       epicsInterruptUnlock(lockKey);
        return 0;
     }
     return 1;

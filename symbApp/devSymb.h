@@ -1,3 +1,6 @@
+#ifndef DEVSYMB_H
+#define DEVSYMB_H
+
 /*************************************************************************\
 * Copyright (c) 2002 The University of Chicago, as Operator of Argonne
 * National Laboratory.
@@ -8,6 +11,16 @@
 \*************************************************************************/
 
 /* $Id$ */
+
+#include	<stdio.h>
+#include	<string.h>
+
+#include	<dbDefs.h>
+#include	<dbAccess.h>
+#include	<recGbl.h>
+#include	<devSup.h>
+#include    <epicsInterrupt.h>
+#include	<epicsExport.h>
 
 
 /* This is the device priv structure */
@@ -22,3 +35,5 @@ struct vxSym {
 /* This is the call to create it */
 
 extern int devSymbFind(struct link *plink, void *pdpvt);
+
+#endif /* DEVSYMB_H */

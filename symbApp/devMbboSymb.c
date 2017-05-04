@@ -10,14 +10,8 @@
 /* $Id$ */
 
 
-#include	<string.h>
+#include "devSymb.h"
 
-#include	"dbDefs.h"
-#include	"dbAccess.h"
-#include	"recGbl.h"
-#include	"devSup.h"
-#include	"devSymb.h"
-#include	"epicsExport.h"
 #include	"mbboRecord.h"
 
 static long init_record();
@@ -64,9 +58,9 @@ static long write_mbbo(pmbbo)
     
     if (priv)
     {
-        lockKey = intLock();
+        lockKey = epicsInterruptLock();
         *((long *)(*priv->ppvar) + priv->index) = pmbbo->val;
-        intUnlock(lockKey);
+        epicsInterruptUnlock(lockKey);
     }
     else
         return(1);
