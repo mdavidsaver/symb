@@ -26,7 +26,7 @@ static long read_longin(struct longinRecord *plongin) {
     struct vxSym *priv = (struct vxSym *) plongin->dpvt;
     if (priv) {
         int lockKey = epicsInterruptLock();
-        plongin->val = *((long *)(*priv->ppvar) + priv->index);
+        plongin->val = *SYMADDR(long, priv);
         epicsInterruptUnlock(lockKey);
         return 0;
     }

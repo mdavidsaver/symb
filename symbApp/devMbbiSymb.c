@@ -35,7 +35,7 @@ static long read_mbbi(struct mbbiRecord *pmbbi) {
     struct vxSym *priv = (struct vxSym *) pmbbi->dpvt;
     if (priv) {
         int lockKey = epicsInterruptLock();
-        pmbbi->val = *((unsigned short *)(*priv->ppvar) + priv->index);
+        pmbbi->val = *SYMADDR(unsigned short, priv);
         epicsInterruptUnlock(lockKey);
         pmbbi->udf = FALSE;
         return 2; /* Don't convert */
@@ -47,7 +47,7 @@ static long read_mbbiRaw(struct mbbiRecord *pmbbi) {
     struct vxSym *priv = (struct vxSym *) pmbbi->dpvt;
     if (priv) {
         int lockKey = epicsInterruptLock();
-        pmbbi->rval = *((long *)(*priv->ppvar) + priv->index);
+        pmbbi->rval = *SYMADDR(long, priv);
         epicsInterruptUnlock(lockKey);
         pmbbi->udf = FALSE;
         return 0; /* Convert */

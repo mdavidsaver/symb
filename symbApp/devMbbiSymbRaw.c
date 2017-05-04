@@ -55,7 +55,7 @@ static long read_mbbi(struct mbbiRecord	*pmbbi)
 
     if (pmbbi->dpvt)
     {
-       pmbbi->rval = *((long *)(*priv->ppvar) + priv->index);
+       pmbbi->rval = *SYMADDR(long, priv);
        status = 0;
     }
     else

@@ -57,7 +57,7 @@ static long write_longout(struct longoutRecord	*plongout)
     if (priv)
 	{
        lockKey = epicsInterruptLock();
-       *((long *)(*priv->ppvar) + priv->index) = plongout->val;
+       *SYMADDR(long, priv) = plongout->val;
        epicsInterruptUnlock(lockKey);
 	}
     else

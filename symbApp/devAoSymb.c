@@ -36,7 +36,7 @@ static long init_record(struct aoRecord *pao) {
     }
     priv = (struct vxSym *) pao->dpvt;
     if (priv->ppvar != NULL)
-        pao->val = *((double *)(*priv->ppvar) + priv->index);
+        pao->val = *SYMADDR(double, priv);
     return 2; /* Don't convert */
 }
 
@@ -44,7 +44,7 @@ static long write_ao(struct aoRecord *pao) {
     struct vxSym *priv = (struct vxSym *) pao->dpvt;
     if (priv) {
        int lockKey = epicsInterruptLock();
-       *((double *)(*priv->ppvar) + priv->index) = pao->oval;
+       *SYMADDR(double, priv) = pao->oval;
        epicsInterruptUnlock(lockKey);
        return 0;
     }

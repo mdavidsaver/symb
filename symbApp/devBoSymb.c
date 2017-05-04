@@ -22,7 +22,7 @@ static long init_record(struct boRecord *pbo) {
     }
     priv = (struct vxSym *) pbo->dpvt;
     if (priv->ppvar != NULL)
-        pbo->rval = *((unsigned short *)(*priv->ppvar) + priv->index);
+        pbo->rval = *SYMADDR(unsigned short, priv);
     return 0;
 }
 
@@ -30,7 +30,7 @@ static long write_bo(struct boRecord *pbo) {
     struct vxSym *priv = (struct vxSym *) pbo->dpvt;
     if (priv) {
         int lockKey = epicsInterruptLock();
-        *((unsigned short *)(*priv->ppvar) + priv->index) = pbo->rval;
+        *SYMADDR(unsigned short, priv) = pbo->rval;
         epicsInterruptUnlock(lockKey);
         return 0;
     }

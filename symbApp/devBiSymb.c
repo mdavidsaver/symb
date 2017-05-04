@@ -26,7 +26,7 @@ static long read_bi(struct biRecord *pbi) {
     struct vxSym *priv = (struct vxSym *) pbi->dpvt;
     if (priv) {
         int lockKey = epicsInterruptLock();
-        pbi->val = *((unsigned short *)(*priv->ppvar) + priv->index);
+        pbi->val = *SYMADDR(unsigned short, priv);
         epicsInterruptUnlock(lockKey);
         pbi->udf = FALSE;
         return 2; /* Don't convert */

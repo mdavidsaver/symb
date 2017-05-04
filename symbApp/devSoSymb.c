@@ -57,7 +57,7 @@ static long write_stringout(struct stringoutRecord	*pstringout)
     {
         pstringout->val[39] = '\0';
         lockKey = epicsInterruptLock();
-        strcpy((char *)(*priv->ppvar) + priv->index, pstringout->val);
+        strcpy(SYMADDR(char, priv), pstringout->val);
         epicsInterruptUnlock(lockKey);
     }
     else 

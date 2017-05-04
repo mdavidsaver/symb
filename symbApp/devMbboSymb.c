@@ -57,7 +57,7 @@ static long write_mbbo(struct mbboRecord	*pmbbo)
     if (priv)
     {
         lockKey = epicsInterruptLock();
-        *((long *)(*priv->ppvar) + priv->index) = pmbbo->val;
+        *SYMADDR(long, priv) = pmbbo->val;
         epicsInterruptUnlock(lockKey);
     }
     else

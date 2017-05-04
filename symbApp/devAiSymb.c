@@ -42,7 +42,7 @@ static long read_ai(struct aiRecord *pai) {
     struct vxSym *priv = (struct vxSym *) pai->dpvt;
     if (priv) {
         int lockKey = epicsInterruptLock();
-        pai->val = *((double *)(*priv->ppvar) + priv->index);
+        pai->val = *SYMADDR(double, priv);
         epicsInterruptUnlock(lockKey);
         pai->udf = FALSE;
         return 2; /* Don't convert */
@@ -75,7 +75,7 @@ static long read_aiLong(struct aiRecord *pai) {
     struct vxSym *priv = (struct vxSym *) pai->dpvt;
     if (priv) {
         int lockKey = epicsInterruptLock();
-        pai->rval = *((long *)(*priv->ppvar) + priv->index);
+        pai->rval = *SYMADDR(long, priv);
         epicsInterruptUnlock(lockKey);
         return 0; /* Convert */
     }
@@ -107,7 +107,7 @@ static long read_aiShort(struct aiRecord *pai) {
     struct vxSym *priv = (struct vxSym *) pai->dpvt;
     if (priv) {
         int lockKey = epicsInterruptLock();
-        pai->rval = *((short *)(*priv->ppvar) + priv->index);
+        pai->rval = *SYMADDR(short, priv);
         epicsInterruptUnlock(lockKey);
         return 0; /* Convert */
     }

@@ -25,7 +25,7 @@ static long read_stringin(struct stringinRecord *pstringin) {
     struct vxSym *priv = (struct vxSym *) pstringin->dpvt;
     if (priv) {
         int lockKey = epicsInterruptLock();
-        strncpy(pstringin->val, (char *)(*priv->ppvar) + priv->index, 39);
+        strncpy(pstringin->val, SYMADDR(char, priv), 39);
         epicsInterruptUnlock(lockKey);
         pstringin->val[39] = '\0';
         pstringin->udf = FALSE;

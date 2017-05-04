@@ -58,7 +58,7 @@ static long write_mbbo(struct mbboRecord	*pmbbo)
     struct vxSym *priv = (struct vxSym *) pmbbo->dpvt;
     
     if (priv)
-       *((long *)(*priv->ppvar) + priv->index) = pmbbo->rval;
+       *SYMADDR(long, priv) = pmbbo->rval;
     else
        return(1);
 
