@@ -34,6 +34,6 @@ struct vxSym {
 
 /* This is the call to create it */
 
-extern int devSymbFind(struct link *plink, void *pdpvt);
+extern int devSymbFind(struct link *plink, void **pdpvt);
 
 #endif /* DEVSYMB_H */

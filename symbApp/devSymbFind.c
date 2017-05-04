@@ -56,13 +56,10 @@ starts at the third character of the string.
 
 */
 
-#include "devSymb.h"
+#include <ctype.h>
 
-#include "link.h"
-
-#ifdef vxWorks
-#include "epicsDynLink.h"
-#endif
+#include <link.h>
+#include <epicsFindSymbol.h>
 
 #include "devSymb.h"
 
@@ -72,12 +69,11 @@ static int parseInstio(char *string, int *deref, char **name, int *index);
 /*
  * Determine vxWorks variable name and return address of data
  */
-int devSymbFind(struct link *plink, void *pdpvt)
+int devSymbFind(struct link *plink, void **pdpvt)
 {
     int  deref;
     char *nptr;
     int  index;
-    SYM_TYPE stype;
     void *paddr;
     struct vxSym *priv;
     struct vxSym **pprivate = (struct vxSym **) pdpvt;
@@ -92,8 +88,9 @@ int devSymbFind(struct link *plink, void *pdpvt)
     if (parseInstio(pinstio->string, &deref, &nptr, &index))
     return 1;
 
-    if (symFindByNameEPICS(sysSymTbl, nptr, (char **) &paddr, &stype))
-    return 1;
+    paddr = epicsFindSymbol(nptr);
+    if(!paddr)
+        return 1;
 
     /* Name exists, allocate a priv structure */
     priv = (struct vxSym *) malloc(sizeof (struct vxSym));
