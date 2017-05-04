@@ -1,4 +1,11 @@
 
+record(ai, "test:invalid") {
+    field(DTYP, "vxWorks Variable")
+    field(INP , "@invalid_variable")
+    field(PINI, "YES")
+}
+
+
 record(ai, "test:ai:dbl") {
     field(DTYP, "vxWorks Variable")
     field(INP , "@test_double")

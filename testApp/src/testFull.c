@@ -1,6 +1,7 @@
 
 #include <stdlib.h>
 
+#include <alarm.h>
 #include <errlog.h>
 #include <dbUnitTest.h>
 #include <testMain.h>
@@ -10,6 +11,13 @@
 void testIoc_registerRecordDeviceDriver(struct dbBase *);
 
 double test_double;
+
+static void testInvalid(void)
+{
+    testDiag("Test that bad variable names result in COMM_ALARM");
+    testdbGetFieldEqual("test:invalid.SEVR", DBF_LONG, INVALID_ALARM);
+    testdbGetFieldEqual("test:invalid.STAT", DBF_LONG, COMM_ALARM);
+}
 
 static void testDouble(void)
 {
@@ -32,7 +40,7 @@ static void testDouble(void)
 
 MAIN(testFull)
 {
-    testPlan(9);
+    testPlan(11);
 
     testOk1(test_double==0.0);
 
@@ -45,6 +53,8 @@ MAIN(testFull)
     eltc(0);
     testIocInitOk();
     eltc(1);
+
+    testInvalid();
 
     testDouble();
 
