@@ -29,7 +29,7 @@ static long init_record(struct boRecord *pbo) {
     priv = (struct vxSym *) pbo->dpvt;
     if (priv->ppvar != NULL)
         pbo->rval = *((unsigned short *)(*priv->ppvar) + priv->index);
-    return OK;
+    return 0;
 }
 
 static long write_bo(struct boRecord *pbo) {
@@ -38,9 +38,9 @@ static long write_bo(struct boRecord *pbo) {
         int lockKey = intLock();
         *((unsigned short *)(*priv->ppvar) + priv->index) = pbo->rval;
         intUnlock(lockKey);
-        return OK;
+        return 0;
     }
-    return ERROR;
+    return 1;
 }
 
 static struct {

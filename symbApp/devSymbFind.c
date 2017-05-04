@@ -89,20 +89,20 @@ int devSymbFind(struct link *plink, void *pdpvt)
 
     /* link must be of type INST_IO */
     if (plink->type != INST_IO)
-	return ERROR;
+    return 1;
 
     /* parse INST_IO string */
     pinstio = (struct instio *) &plink->value.instio;
     if (parseInstio(pinstio->string, &deref, &nptr, &index))
-	return ERROR;
+    return 1;
 
     if (symFindByNameEPICS(sysSymTbl, nptr, (char **) &paddr, &stype))
-	return ERROR;
+    return 1;
 
     /* Name exists, allocate a priv structure */
     priv = (struct vxSym *) malloc(sizeof (struct vxSym));
     if (priv == NULL)
-    	return ERROR;
+        return 1;
     
     /* Fill in the fields */
     priv->index = index;
@@ -119,7 +119,7 @@ int devSymbFind(struct link *plink, void *pdpvt)
     /* Pass new priv structure back to caller */
     *pprivate = priv;
 
-    return OK;
+    return 0;
 }
 
 /*
@@ -179,7 +179,7 @@ static int parseInstio(char *string, int *deref, char **name, int *index)
 	if (*string != ']')
 	{
 	    printf("no trailing ]\n");
-	    return ERROR;
+        return 1;
 	}
 
 	string++;
@@ -192,10 +192,10 @@ static int parseInstio(char *string, int *deref, char **name, int *index)
     if (*string != '\0')
     {
 	printf("unexpected trailing characters\n");
-	return ERROR;
+    return 1;
     }
 
-    return OK;
+    return 0;
 }
 
 #ifdef TEST
@@ -223,6 +223,6 @@ int test(char *string)
     }
     printf("\n");
 
-    return OK;
+    return 0;
 }
 #endif /* TEST */

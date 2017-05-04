@@ -25,7 +25,7 @@ static long init_record(struct longinRecord *plongin) {
             "devLiSymb (init_record) Illegal NAME or INP field");
         return S_db_badField;
     }
-    return OK;
+    return 0;
 }
 
 static long read_longin(struct longinRecord *plongin) {
@@ -34,9 +34,9 @@ static long read_longin(struct longinRecord *plongin) {
         int lockKey = intLock();
         plongin->val = *((long *)(*priv->ppvar) + priv->index);
         intUnlock(lockKey);
-        return OK;
+        return 0;
     }
-    return ERROR;
+    return 1;
 }
 
 static struct {

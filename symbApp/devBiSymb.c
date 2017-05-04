@@ -25,7 +25,7 @@ static long init_record(struct biRecord *pbi) {
             "devBiSymb (init_record) Illegal NAME or INP field");
         return S_db_badField;
     }
-    return OK;
+    return 0;
 }
 
 static long read_bi(struct biRecord *pbi) {
@@ -37,7 +37,7 @@ static long read_bi(struct biRecord *pbi) {
         pbi->udf = FALSE;
         return 2; /* Don't convert */
     }
-    return ERROR;
+    return 1;
 }
 
 static struct {

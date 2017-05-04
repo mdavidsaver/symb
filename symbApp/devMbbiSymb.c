@@ -35,7 +35,7 @@ static long init_record(struct mbbiRecord *pmbbi) {
             "devMbbiSymb (init_record) Illegal NAME or INP field");
         return S_db_badField;
     }
-    return OK;
+    return 0;
 }
 
 static long read_mbbi(struct mbbiRecord *pmbbi) {
@@ -47,7 +47,7 @@ static long read_mbbi(struct mbbiRecord *pmbbi) {
         pmbbi->udf = FALSE;
         return 2; /* Don't convert */
     }
-    return ERROR;
+    return 1;
 }
 
 static long read_mbbiRaw(struct mbbiRecord *pmbbi) {
@@ -57,9 +57,9 @@ static long read_mbbiRaw(struct mbbiRecord *pmbbi) {
         pmbbi->rval = *((long *)(*priv->ppvar) + priv->index);
         intUnlock(lockKey);
         pmbbi->udf = FALSE;
-        return OK; /* Convert */
+        return 0; /* Convert */
     }
-    return ERROR;
+    return 1;
 }
 
 static struct mbbi_DSET devMbbiSymb = {

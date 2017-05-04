@@ -27,7 +27,7 @@ static long init_record(struct stringinRecord *pstringin) {
             "devSiSymb (init_record) Illegal NAME or INP field");
         return S_db_badField;
     }
-    return OK;
+    return 0;
 }
 
 static long read_stringin(struct stringinRecord *pstringin) {
@@ -38,9 +38,9 @@ static long read_stringin(struct stringinRecord *pstringin) {
         intUnlock(lockKey);
         pstringin->val[39] = '\0';
         pstringin->udf = FALSE;
-        return OK;
+        return 0;
     }
-    return ERROR;
+    return 1;
 }
 
 static struct {

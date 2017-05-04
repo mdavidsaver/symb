@@ -42,7 +42,7 @@ static long init_record(struct aiRecord *pai) {
             "devAiSymb (init_record) Illegal NAME or INP field");
         return S_db_badField;
     }
-    return OK;
+    return 0;
 }
 
 static long read_ai(struct aiRecord *pai) {
@@ -54,7 +54,7 @@ static long read_ai(struct aiRecord *pai) {
         pai->udf = FALSE;
         return 2; /* Don't convert */
     }
-    return ERROR;
+    return 1;
 }
 
 static struct ai_DSET devAiSymb = {
@@ -69,7 +69,7 @@ epicsExportAddress(dset, devAiSymb);
 static long special_linconvLong(struct aiRecord *pai) {
     pai->eoff = pai->egul;
     pai->eslo = (pai->eguf - pai->egul) / ((double) LONG_MAX - LONG_MIN);
-    return OK;
+    return 0;
 }
 
 static long init_recordLong(struct aiRecord *pai) {
@@ -84,9 +84,9 @@ static long read_aiLong(struct aiRecord *pai) {
         int lockKey = intLock();
         pai->rval = *((long *)(*priv->ppvar) + priv->index);
         intUnlock(lockKey);
-        return OK; /* Convert */
+        return 0; /* Convert */
     }
-    return ERROR;
+    return 1;
 }
 
 static struct ai_DSET devAiSymbLong = {
@@ -101,7 +101,7 @@ epicsExportAddress(dset, devAiSymbLong);
 static long special_linconvShort(struct aiRecord *pai) {
     pai->eoff = pai->egul;
     pai->eslo = (pai->eguf - pai->egul) / ((double) SHRT_MAX - SHRT_MIN);
-    return OK;
+    return 0;
 }
 
 static long init_recordShort(struct aiRecord *pai) {
@@ -116,9 +116,9 @@ static long read_aiShort(struct aiRecord *pai) {
         int lockKey = intLock();
         pai->rval = *((short *)(*priv->ppvar) + priv->index);
         intUnlock(lockKey);
-        return OK; /* Convert */
+        return 0; /* Convert */
     }
-    return ERROR;
+    return 1;
 }
 
 static struct ai_DSET devAiSymbShort = {

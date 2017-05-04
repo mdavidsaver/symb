@@ -53,9 +53,9 @@ static long write_ao(struct aoRecord *pao) {
        int lockKey = intLock();
        *((double *)(*priv->ppvar) + priv->index) = pao->oval;
        intUnlock(lockKey);
-       return OK;
+       return 0;
     }
-    return ERROR;
+    return 1;
 }
 
 static struct ao_DSET devAoSymb = {

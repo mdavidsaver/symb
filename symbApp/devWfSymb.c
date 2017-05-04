@@ -28,7 +28,7 @@ static long init_record(struct waveformRecord *pwf) {
             "devWfSymb (init_record) Illegal NAME or INP field");
         return S_db_badField;
     }
-    return OK;
+    return 0;
 }
 
 static long read_wf(struct waveformRecord *pwf) {
@@ -41,9 +41,9 @@ static long read_wf(struct waveformRecord *pwf) {
                pwf->nelm * typesize);
         intUnlock(lockKey);
         pwf->nord = pwf->nelm; /* We always get it all */
-        return OK;
+        return 0;
     }
-    return ERROR;
+    return 1;
 }
 
 static struct {
