@@ -41,6 +41,8 @@ struct vxSym {
     long index;
 };
 
+/* Fetch address as TYPE* */
+#define SYMADDR(TYPE, PSYM) ((TYPE*)(*(PSYM)->ppvar) + (PSYM)->index)
 
 /* This is the call to create it */
 

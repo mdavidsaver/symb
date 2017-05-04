@@ -11,6 +11,12 @@ testParse_LIBS += Symb
 testParse_LIBS += $(EPICS_BASE_IOC_LIBS)
 TESTS += testParse
 
+TESTPROD_HOST += testInit
+testInit_SRCS += testInit.c
+testInit_LIBS += Symb
+testInit_LIBS += $(EPICS_BASE_IOC_LIBS)
+TESTS += testInit
+
 TESTSCRIPTS_HOST += $(TESTS:%=%.t)
 
 include $(TOP)/configure/RULES
