@@ -9,9 +9,6 @@
 
 /* $Id$ */
 
-#include <vxWorks.h>
-#include <intLib.h>
-
 #include "dbDefs.h"
 #include "dbAccess.h"
 #include "recGbl.h"

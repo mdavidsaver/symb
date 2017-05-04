@@ -17,10 +17,6 @@ This module contains routines for testing vxWorks global variable
 device support.
 */
 
-#include        <vxWorks.h>
-#include	<sysLib.h>
-#include	<taskLib.h>
-
 #include        <stdio.h>
 #include        <string.h>
 

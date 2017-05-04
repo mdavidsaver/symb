@@ -10,12 +10,7 @@
 /* $Id$ */
 
 
-#include	<vxWorks.h>
-#include	<sysSymTbl.h>
-#include	<types.h>
-#include	<stdioLib.h>
 #include	<string.h>
-#include	<intLib.h>
 
 #include	"dbDefs.h"
 #include	"dbAccess.h"

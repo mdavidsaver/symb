@@ -9,8 +9,6 @@
 
 /* $Id$ */
 
-#include <vxWorks.h>
-#include <intLib.h>
 #include <limits.h>
 
 #include "dbDefs.h"

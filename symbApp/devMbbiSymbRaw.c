@@ -9,10 +9,7 @@
 
 /* $Id$ */
 
-#include	<vxWorks.h>
-#include        <sysSymTbl.h>
-#include	<types.h>
-#include	<stdioLib.h>
+#include	<stdio.h>
 #include	<string.h>
 
 #include	<alarm.h>
