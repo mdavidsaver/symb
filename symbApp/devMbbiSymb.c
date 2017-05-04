@@ -22,34 +22,34 @@ struct mbbi_DSET {
     DEVSUPFUN read_mbbi;
 };
 
-static long init_record(struct mbbiRecord *pmbbi) {
-    if (devSymbFind(&pmbbi->inp, &pmbbi->dpvt)) {
-        recGblRecordError(S_db_badField, (void *)pmbbi,
+static long init_record(struct mbbiRecord *prec) {
+    if (devSymbFind(&prec->inp, &prec->dpvt)) {
+        recGblRecordError(S_db_badField, (void *)prec,
             "devMbbiSymb (init_record) Illegal NAME or INP field");
         return S_db_badField;
     }
     return 0;
 }
 
-static long read_mbbi(struct mbbiRecord *pmbbi) {
-    struct vxSym *priv = (struct vxSym *) pmbbi->dpvt;
+static long read_mbbi(struct mbbiRecord *prec) {
+    struct vxSym *priv = (struct vxSym *) prec->dpvt;
     if (priv) {
         int lockKey = epicsInterruptLock();
-        pmbbi->val = *SYMADDR(unsigned short, priv);
+        prec->val = *SYMADDR(unsigned short, priv);
         epicsInterruptUnlock(lockKey);
-        pmbbi->udf = FALSE;
+        prec->udf = FALSE;
         return 2; /* Don't convert */
     }
     return 1;
 }
 
-static long read_mbbiRaw(struct mbbiRecord *pmbbi) {
-    struct vxSym *priv = (struct vxSym *) pmbbi->dpvt;
+static long read_mbbiRaw(struct mbbiRecord *prec) {
+    struct vxSym *priv = (struct vxSym *) prec->dpvt;
     if (priv) {
         int lockKey = epicsInterruptLock();
-        pmbbi->rval = *SYMADDR(long, priv);
+        prec->rval = *SYMADDR(long, priv);
         epicsInterruptUnlock(lockKey);
-        pmbbi->udf = FALSE;
+        prec->udf = FALSE;
         return 0; /* Convert */
     }
     return 1;

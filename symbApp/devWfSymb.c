@@ -15,25 +15,25 @@
 
 static int sizeofTypes[] = {MAX_STRING_SIZE,1,1,2,2,4,4,4,8,2};
 
-static long init_record(struct waveformRecord *pwf) {
-    if (devSymbFind(&pwf->inp, &pwf->dpvt)) {
-        recGblRecordError(S_db_badField, (void *)pwf,
+static long init_record(struct waveformRecord *prec) {
+    if (devSymbFind(&prec->inp, &prec->dpvt)) {
+        recGblRecordError(S_db_badField, (void *)prec,
             "devWfSymb (init_record) Illegal NAME or INP field");
         return S_db_badField;
     }
     return 0;
 }
 
-static long read_wf(struct waveformRecord *pwf) {
-    struct vxSym *priv = (struct vxSym *) pwf->dpvt;
+static long read_wf(struct waveformRecord *prec) {
+    struct vxSym *priv = (struct vxSym *) prec->dpvt;
     if (priv) {
-        int typesize = sizeofTypes[pwf->ftvl];
+        int typesize = sizeofTypes[prec->ftvl];
         int lockKey = epicsInterruptLock();
-        memcpy(pwf->bptr, 
+        memcpy(prec->bptr,
                (char *)(*priv->ppvar) + typesize * priv->index, 
-               pwf->nelm * typesize);
+               prec->nelm * typesize);
         epicsInterruptUnlock(lockKey);
-        pwf->nord = pwf->nelm; /* We always get it all */
+        prec->nord = prec->nelm; /* We always get it all */
         return 0;
     }
     return 1;

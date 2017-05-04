@@ -13,22 +13,22 @@
 
 #include "biRecord.h"
 
-static long init_record(struct biRecord *pbi) {
-    if (devSymbFind(&pbi->inp, &pbi->dpvt)) {
-        recGblRecordError(S_db_badField, (void *)pbi,
+static long init_record(struct biRecord *prec) {
+    if (devSymbFind(&prec->inp, &prec->dpvt)) {
+        recGblRecordError(S_db_badField, (void *)prec,
             "devBiSymb (init_record) Illegal NAME or INP field");
         return S_db_badField;
     }
     return 0;
 }
 
-static long read_bi(struct biRecord *pbi) {
-    struct vxSym *priv = (struct vxSym *) pbi->dpvt;
+static long read_bi(struct biRecord *prec) {
+    struct vxSym *priv = (struct vxSym *) prec->dpvt;
     if (priv) {
         int lockKey = epicsInterruptLock();
-        pbi->val = *SYMADDR(unsigned short, priv);
+        prec->val = *SYMADDR(unsigned short, priv);
         epicsInterruptUnlock(lockKey);
-        pbi->udf = FALSE;
+        prec->udf = FALSE;
         return 2; /* Don't convert */
     }
     return 1;

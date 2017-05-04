@@ -40,12 +40,12 @@ struct {
 epicsExportAddress(dset, devMbboSymbRaw);
 
 
-static long init_record(struct mbboRecord	*pmbbo)
+static long init_record(struct mbboRecord	*prec)
 {
     /* determine address of record value */
-    if (devSymbFind(&pmbbo->out, &pmbbo->dpvt))
+    if (devSymbFind(&prec->out, &prec->dpvt))
     {
-        recGblRecordError(S_db_badField,(void *)pmbbo,
+        recGblRecordError(S_db_badField,(void *)prec,
             "devMbboSymbRaw (init_record) Illegal NAME or OUT field");
         return(S_db_badField);
     }
@@ -53,16 +53,16 @@ static long init_record(struct mbboRecord	*pmbbo)
     return(0);		
 }
 
-static long write_mbbo(struct mbboRecord	*pmbbo)
+static long write_mbbo(struct mbboRecord	*prec)
 {
-    struct vxSym *priv = (struct vxSym *) pmbbo->dpvt;
+    struct vxSym *priv = (struct vxSym *) prec->dpvt;
     
     if (priv)
-       *SYMADDR(long, priv) = pmbbo->rval;
+       *SYMADDR(long, priv) = prec->rval;
     else
        return(1);
 
-    pmbbo->udf=FALSE;
+    prec->udf=FALSE;
 
     return(0);
 }

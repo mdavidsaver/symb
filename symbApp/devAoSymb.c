@@ -27,27 +27,28 @@ struct ao_DSET {
  * Double support, no conversions
  */
 
-static long init_record(struct aoRecord *pao) {
+static long init_record(struct aoRecord *prec) {
     struct vxSym *priv;
-    if (devSymbFind(&pao->out, &pao->dpvt)) {
-        recGblRecordError(S_db_badField, (void *)pao,
+    if (devSymbFind(&prec->out, &prec->dpvt)) {
+        recGblRecordError(S_db_badField, (void *)prec,
             "devAoSymb (init_record) Illegal NAME or OUT field");
         return S_db_badField;
     }
-    priv = (struct vxSym *) pao->dpvt;
+    priv = (struct vxSym *) prec->dpvt;
     if (priv->ppvar != NULL)
-        pao->val = *SYMADDR(double, priv);
+        prec->val = *SYMADDR(double, priv);
     return 2; /* Don't convert */
 }
 
-static long write_ao(struct aoRecord *pao) {
-    struct vxSym *priv = (struct vxSym *) pao->dpvt;
+static long write_ao(struct aoRecord *prec) {
+    struct vxSym *priv = (struct vxSym *) prec->dpvt;
     if (priv) {
        int lockKey = epicsInterruptLock();
-       *SYMADDR(double, priv) = pao->oval;
+       *SYMADDR(double, priv) = prec->oval;
        epicsInterruptUnlock(lockKey);
        return 0;
-    }
+    } else
+        (void)recGblSetSevr(pai, COMM_ALARM, INVALID_ALARM);
     return 1;
 }
 

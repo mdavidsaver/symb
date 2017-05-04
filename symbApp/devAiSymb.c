@@ -29,22 +29,22 @@ struct ai_DSET {
  * Double support, no conversion
  */
 
-static long init_record(struct aiRecord *pai) {
-    if (devSymbFind(&pai->inp, &pai->dpvt)) {
-        recGblRecordError(S_db_badField, (void *)pai,
+static long init_record(struct aiRecord *prec) {
+    if (devSymbFind(&prec->inp, &prec->dpvt)) {
+        recGblRecordError(S_db_badField, (void *)prec,
             "devAiSymb (init_record) Illegal NAME or INP field");
         return S_db_badField;
     }
     return 0;
 }
 
-static long read_ai(struct aiRecord *pai) {
-    struct vxSym *priv = (struct vxSym *) pai->dpvt;
+static long read_ai(struct aiRecord *prec) {
+    struct vxSym *priv = (struct vxSym *) prec->dpvt;
     if (priv) {
         int lockKey = epicsInterruptLock();
-        pai->val = *SYMADDR(double, priv);
+        prec->val = *SYMADDR(double, priv);
         epicsInterruptUnlock(lockKey);
-        pai->udf = FALSE;
+        prec->udf = FALSE;
         return 2; /* Don't convert */
     }
     return 1;
@@ -59,23 +59,23 @@ epicsExportAddress(dset, devAiSymb);
  * Long integer support with conversion
  */
 
-static long special_linconvLong(struct aiRecord *pai) {
-    pai->eoff = pai->egul;
-    pai->eslo = (pai->eguf - pai->egul) / ((double) LONG_MAX - LONG_MIN);
+static long special_linconvLong(struct aiRecord *prec) {
+    prec->eoff = prec->egul;
+    prec->eslo = (prec->eguf - prec->egul) / ((double) LONG_MAX - LONG_MIN);
     return 0;
 }
 
-static long init_recordLong(struct aiRecord *pai) {
-    long status = init_record(pai);
-    if (!status) special_linconvLong(pai);
+static long init_recordLong(struct aiRecord *prec) {
+    long status = init_record(prec);
+    if (!status) special_linconvLong(prec);
     return status;
 }
 
-static long read_aiLong(struct aiRecord *pai) {
-    struct vxSym *priv = (struct vxSym *) pai->dpvt;
+static long read_aiLong(struct aiRecord *prec) {
+    struct vxSym *priv = (struct vxSym *) prec->dpvt;
     if (priv) {
         int lockKey = epicsInterruptLock();
-        pai->rval = *SYMADDR(long, priv);
+        prec->rval = *SYMADDR(long, priv);
         epicsInterruptUnlock(lockKey);
         return 0; /* Convert */
     }
@@ -91,23 +91,23 @@ epicsExportAddress(dset, devAiSymbLong);
  * Short integer support with conversion
  */
 
-static long special_linconvShort(struct aiRecord *pai) {
-    pai->eoff = pai->egul;
-    pai->eslo = (pai->eguf - pai->egul) / ((double) SHRT_MAX - SHRT_MIN);
+static long special_linconvShort(struct aiRecord *prec) {
+    prec->eoff = prec->egul;
+    prec->eslo = (prec->eguf - prec->egul) / ((double) SHRT_MAX - SHRT_MIN);
     return 0;
 }
 
-static long init_recordShort(struct aiRecord *pai) {
-    long status = init_record(pai);
-    if (!status) status = special_linconvShort(pai);
+static long init_recordShort(struct aiRecord *prec) {
+    long status = init_record(prec);
+    if (!status) status = special_linconvShort(prec);
     return status;
 }
 
-static long read_aiShort(struct aiRecord *pai) {
-    struct vxSym *priv = (struct vxSym *) pai->dpvt;
+static long read_aiShort(struct aiRecord *prec) {
+    struct vxSym *priv = (struct vxSym *) prec->dpvt;
     if (priv) {
         int lockKey = epicsInterruptLock();
-        pai->rval = *SYMADDR(short, priv);
+        prec->rval = *SYMADDR(short, priv);
         epicsInterruptUnlock(lockKey);
         return 0; /* Convert */
     }

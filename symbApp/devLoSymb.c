@@ -36,12 +36,12 @@ struct {
 epicsExportAddress( dset, devLoSymb );
 
 
-static long init_record(struct longoutRecord	*plongout)
+static long init_record(struct longoutRecord	*prec)
 {
     /* determine address of record value */
-    if (devSymbFind(&plongout->out, &plongout->dpvt))
+    if (devSymbFind(&prec->out, &prec->dpvt))
     {
-        recGblRecordError(S_db_badField,(void *)plongout,
+        recGblRecordError(S_db_badField,(void *)prec,
             "devLoSymb (init_record) Illegal NAME or OUT field");
         return(S_db_badField);
     }
@@ -49,21 +49,21 @@ static long init_record(struct longoutRecord	*plongout)
     return(0);
 }
 
-static long write_longout(struct longoutRecord	*plongout)
+static long write_longout(struct longoutRecord	*prec)
 {
-    struct vxSym *priv = (struct vxSym *) plongout->dpvt;
+    struct vxSym *priv = (struct vxSym *) prec->dpvt;
 	int lockKey;
 
     if (priv)
 	{
        lockKey = epicsInterruptLock();
-       *SYMADDR(long, priv) = plongout->val;
+       *SYMADDR(long, priv) = prec->val;
        epicsInterruptUnlock(lockKey);
 	}
     else
        return(1);
 
-    plongout->udf=FALSE;
+    prec->udf=FALSE;
 
     return(0);
 }

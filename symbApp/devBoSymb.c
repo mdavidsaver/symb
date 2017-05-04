@@ -13,24 +13,24 @@
 
 #include "boRecord.h"
 
-static long init_record(struct boRecord *pbo) {
+static long init_record(struct boRecord *prec) {
     struct vxSym *priv;
-    if (devSymbFind(&pbo->out, &pbo->dpvt)) {
-        recGblRecordError(S_db_badField, (void *)pbo,
+    if (devSymbFind(&prec->out, &prec->dpvt)) {
+        recGblRecordError(S_db_badField, (void *)prec,
             "devBoSymb (init_record) Illegal NAME or OUT field");
         return S_db_badField;
     }
-    priv = (struct vxSym *) pbo->dpvt;
+    priv = (struct vxSym *) prec->dpvt;
     if (priv->ppvar != NULL)
-        pbo->rval = *SYMADDR(unsigned short, priv);
+        prec->rval = *SYMADDR(unsigned short, priv);
     return 0;
 }
 
-static long write_bo(struct boRecord *pbo) {
-    struct vxSym *priv = (struct vxSym *) pbo->dpvt;
+static long write_bo(struct boRecord *prec) {
+    struct vxSym *priv = (struct vxSym *) prec->dpvt;
     if (priv) {
         int lockKey = epicsInterruptLock();
-        *SYMADDR(unsigned short, priv) = pbo->rval;
+        *SYMADDR(unsigned short, priv) = prec->rval;
         epicsInterruptUnlock(lockKey);
         return 0;
     }

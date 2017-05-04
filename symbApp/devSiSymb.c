@@ -12,23 +12,23 @@
 #include "devSymb.h"
 #include <stringinRecord.h>
 
-static long init_record(struct stringinRecord *pstringin) {
-    if (devSymbFind(&pstringin->inp, &pstringin->dpvt)) {
-        recGblRecordError(S_db_badField,(void *)pstringin,
+static long init_record(struct stringinRecord *prec) {
+    if (devSymbFind(&prec->inp, &prec->dpvt)) {
+        recGblRecordError(S_db_badField,(void *)prec,
             "devSiSymb (init_record) Illegal NAME or INP field");
         return S_db_badField;
     }
     return 0;
 }
 
-static long read_stringin(struct stringinRecord *pstringin) {
-    struct vxSym *priv = (struct vxSym *) pstringin->dpvt;
+static long read_stringin(struct stringinRecord *prec) {
+    struct vxSym *priv = (struct vxSym *) prec->dpvt;
     if (priv) {
         int lockKey = epicsInterruptLock();
-        strncpy(pstringin->val, SYMADDR(char, priv), 39);
+        strncpy(prec->val, SYMADDR(char, priv), 39);
         epicsInterruptUnlock(lockKey);
-        pstringin->val[39] = '\0';
-        pstringin->udf = FALSE;
+        prec->val[39] = '\0';
+        prec->udf = FALSE;
         return 0;
     }
     return 1;

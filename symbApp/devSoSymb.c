@@ -4,7 +4,7 @@
 * Copyright (c) 2002 The Regents of the University of California, as
 * Operator of Los Alamos National Laboratory.
 * This file is distributed subject to a Software License Agreement found
-* in the file LICENSE that is included with this distribution. 
+* in the file LICENSE that is included with this distribution.
 \*************************************************************************/
 
 /* $Id$ */
@@ -19,28 +19,28 @@ static long write_stringout();
 /* Create the dset for devSoSymb */
 
 struct {
-	long		number;
-	DEVSUPFUN	report;
-	DEVSUPFUN	init;
-	DEVSUPFUN	init_record;
-	DEVSUPFUN	get_ioint_info;
-	DEVSUPFUN	write_stringout;
+    long		number;
+    DEVSUPFUN	report;
+    DEVSUPFUN	init;
+    DEVSUPFUN	init_record;
+    DEVSUPFUN	get_ioint_info;
+    DEVSUPFUN	write_stringout;
 }devSoSymb={
-	5,
-	NULL,
-	NULL,
-	init_record,
-	NULL,
-	write_stringout};
+    5,
+    NULL,
+    NULL,
+    init_record,
+    NULL,
+    write_stringout};
 epicsExportAddress( dset, devSoSymb );
- 
-
-static long init_record(struct stringoutRecord	*pstringout)
+
+
+static long init_record(struct stringoutRecord	*prec)
 {
     /* determine address of record value */
-    if (devSymbFind(&pstringout->out, &pstringout->dpvt))
+    if (devSymbFind(&prec->out, &prec->dpvt))
     {
-        recGblRecordError(S_db_badField,(void *)pstringout,
+        recGblRecordError(S_db_badField,(void *)prec,
             "devSoSymb (init_record) Illegal NAME or OUT field");
         return(S_db_badField);
     }
@@ -48,22 +48,22 @@ static long init_record(struct stringoutRecord	*pstringout)
     return(0);
 }
 
-static long write_stringout(struct stringoutRecord	*pstringout)
+static long write_stringout(struct stringoutRecord	*prec)
 {
-	int lockKey;
-    struct vxSym *priv = (struct vxSym *) pstringout->dpvt;
+    int lockKey;
+    struct vxSym *priv = (struct vxSym *) prec->dpvt;
 
     if (priv)
     {
-        pstringout->val[39] = '\0';
+        prec->val[39] = '\0';
         lockKey = epicsInterruptLock();
-        strcpy(SYMADDR(char, priv), pstringout->val);
+        strcpy(SYMADDR(char, priv), prec->val);
         epicsInterruptUnlock(lockKey);
     }
-    else 
+    else
         return(1);
 
-    pstringout->udf = FALSE;
+    prec->udf = FALSE;
 
     return(0);
 }

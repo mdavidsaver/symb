@@ -23,6 +23,7 @@
 #include	<dbDefs.h>
 #include	<dbAccess.h>
 #include	<recGbl.h>
+#include    <alarm.h>
 #include	<devSup.h>
 #include    <epicsInterrupt.h>
 #include	<epicsExport.h>

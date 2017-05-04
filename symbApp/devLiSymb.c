@@ -13,20 +13,20 @@
 
 #include "longinRecord.h"
 
-static long init_record(struct longinRecord *plongin) {
-    if (devSymbFind(&plongin->inp, &plongin->dpvt)) {
-        recGblRecordError(S_db_badField, (void *)plongin,
+static long init_record(struct longinRecord *prec) {
+    if (devSymbFind(&prec->inp, &prec->dpvt)) {
+        recGblRecordError(S_db_badField, (void *)prec,
             "devLiSymb (init_record) Illegal NAME or INP field");
         return S_db_badField;
     }
     return 0;
 }
 
-static long read_longin(struct longinRecord *plongin) {
-    struct vxSym *priv = (struct vxSym *) plongin->dpvt;
+static long read_longin(struct longinRecord *prec) {
+    struct vxSym *priv = (struct vxSym *) prec->dpvt;
     if (priv) {
         int lockKey = epicsInterruptLock();
-        plongin->val = *SYMADDR(long, priv);
+        prec->val = *SYMADDR(long, priv);
         epicsInterruptUnlock(lockKey);
         return 0;
     }

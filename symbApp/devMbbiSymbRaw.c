@@ -35,12 +35,12 @@ struct {
 epicsExportAddress( dset, devMbbiSymbRaw );
 
 
-static long init_record(struct mbbiRecord	*pmbbi)
+static long init_record(struct mbbiRecord	*prec)
 {
     /* determine address of record value */
-    if (devSymbFind(pmbbi->name, &pmbbi->inp, &pmbbi->dpvt))
+    if (devSymbFind(prec->name, &prec->inp, &prec->dpvt))
     {
-        recGblRecordError(S_db_badField,(void *)pmbbi,
+        recGblRecordError(S_db_badField,(void *)prec,
             "devMbbiSymbRaw (init_record) Illegal NAME or INP field");
         return(S_db_badField);
     }
@@ -48,14 +48,14 @@ static long init_record(struct mbbiRecord	*pmbbi)
     return(0);		
 }
 
-static long read_mbbi(struct mbbiRecord	*pmbbi)
+static long read_mbbi(struct mbbiRecord	*prec)
 {
     long status;
-    struct vxSym *priv = (struct vxSym *) pmbbi->dpvt;
+    struct vxSym *priv = (struct vxSym *) prec->dpvt;
 
-    if (pmbbi->dpvt)
+    if (prec->dpvt)
     {
-       pmbbi->rval = *SYMADDR(long, priv);
+       prec->rval = *SYMADDR(long, priv);
        status = 0;
     }
     else
