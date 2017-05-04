@@ -70,7 +70,7 @@ starts at the third character of the string.
 int devSymbFind(struct link *plink, void **pdpvt)
 {
     int  deref;
-    char *nptr;
+    const char *nptr;
     int  index;
     void *paddr;
     struct vxSym *priv;
@@ -116,10 +116,10 @@ int devSymbFind(struct link *plink, void **pdpvt)
 /*
  * Parse string of the form ["*"]name["["index"]"] (white space is ignored).
  */
-int parseInstio(char *string, int *deref, char **name, int *index)
+int parseInstio(const char *string, int *deref, const char **name, int *index)
 {
     static char pname[256];
-    char *begin;
+    const char *begin;
 
     /* set default return values */
     *deref = 0;

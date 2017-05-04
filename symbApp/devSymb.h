@@ -45,6 +45,6 @@ struct vxSym {
 /* This is the call to create it */
 
 epicsShareFunc int devSymbFind(struct link *plink, void **pdpvt);
-epicsShareFunc int parseInstio(char *string, int *deref, char **name, int *index);
+epicsShareFunc int parseInstio(const char *string, int *deref, const char **name, int *index);
 
 #endif /* DEVSYMB_H */
