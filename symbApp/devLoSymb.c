@@ -36,8 +36,7 @@ struct {
 epicsExportAddress( dset, devLoSymb );
 
 
-static long init_record(plongout)
-    struct longoutRecord	*plongout;
+static long init_record(struct longoutRecord	*plongout)
 {
     /* determine address of record value */
     if (devSymbFind(plongout->name, &plongout->out, &plongout->dpvt))
@@ -50,8 +49,7 @@ static long init_record(plongout)
     return(0);
 }
 
-static long write_longout(plongout)
-    struct longoutRecord	*plongout;
+static long write_longout(struct longoutRecord	*plongout)
 {
     struct vxSym *priv = (struct vxSym *) plongout->dpvt;
 	int lockKey;

@@ -35,8 +35,7 @@ struct {
 epicsExportAddress( dset, devMbbiSymbRaw );
 
 
-static long init_record(pmbbi)
-    struct mbbiRecord	*pmbbi;
+static long init_record(struct mbbiRecord	*pmbbi)
 {
     /* determine address of record value */
     if (devSymbFind(pmbbi->name, &pmbbi->inp, &pmbbi->dpvt))
@@ -49,8 +48,7 @@ static long init_record(pmbbi)
     return(0);		
 }
 
-static long read_mbbi(pmbbi)
-    struct mbbiRecord	*pmbbi;
+static long read_mbbi(struct mbbiRecord	*pmbbi)
 {
     long status;
     struct vxSym *priv = (struct vxSym *) pmbbi->dpvt;

@@ -40,8 +40,7 @@ struct {
 epicsExportAddress(dset, devMbboSymbRaw);
 
 
-static long init_record(pmbbo)
-    struct mbboRecord	*pmbbo;
+static long init_record(struct mbboRecord	*pmbbo)
 {
     /* determine address of record value */
     if (devSymbFind(pmbbo->name, &pmbbo->out, &pmbbo->dpvt))
@@ -54,8 +53,7 @@ static long init_record(pmbbo)
     return(0);		
 }
 
-static long write_mbbo(pmbbo)
-    struct mbboRecord	*pmbbo;
+static long write_mbbo(struct mbboRecord	*pmbbo)
 {
     struct vxSym *priv = (struct vxSym *) pmbbo->dpvt;
     
