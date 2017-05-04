@@ -10,6 +10,7 @@
 /* $Id$ */
 
 #include "devSymb.h"
+#include <stringinRecord.h>
 
 static long init_record(struct stringinRecord *pstringin) {
     if (devSymbFind(&pstringin->inp, &pstringin->dpvt)) {

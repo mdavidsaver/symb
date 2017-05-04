@@ -11,7 +11,7 @@
 
 #include "devSymb.h"
 
-#include	"devSymb.h"
+#include <stringoutRecord.h>
 
 static long init_record();
 static long write_stringout();
