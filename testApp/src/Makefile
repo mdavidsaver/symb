@@ -48,8 +48,13 @@ endif
 TESTSCRIPTS_HOST += $(TESTS:%=%.t)
 
 symbTestHarness_SRCS += $(testHarness_SRCS)
+symbTestHarness_SRCS += symbTestHarness.c
 
-PROD_vxWorks = symbTestHarness
+symbTestHarness_LIBS += Symb
+symbTestHarness_LIBS += $(EPICS_BASE_IOC_LIBS)
+
+PROD_vxWorks += symbTestHarness
+PROD_RTEMS += symbTestHarness
 
 # external modules will place this line in configure/RELEASE
 DEVSYMB = $(TOP)
