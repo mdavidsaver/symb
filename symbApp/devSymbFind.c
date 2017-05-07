@@ -84,7 +84,7 @@ int devSymbFind(struct link *plink, void **pdpvt)
     /* parse INST_IO string */
     pinstio = (struct instio *) &plink->value.instio;
     if (parseInstio(pinstio->string, &deref, &nptr, &index))
-    return 1;
+    return 2;
 
     paddr = epicsFindSymbol(nptr);
     if(!paddr) {
@@ -93,12 +93,12 @@ int devSymbFind(struct link *plink, void **pdpvt)
             paddr = info->addr;
     }
     if(!paddr)
-        return 1;
+        return 3;
 
     /* Name exists, allocate a priv structure */
     priv = (struct vxSym *) malloc(sizeof (struct vxSym));
     if (priv == NULL)
-        return 1;
+        return 4;
     
     /* Fill in the fields */
     priv->index = index;
