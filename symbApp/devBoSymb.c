@@ -9,9 +9,10 @@
 
 /* $Id$ */
 
-#include "devSymb.h"
+#include <boRecord.h>
 
-#include "boRecord.h"
+#define epicsExportSharedSymbols
+#include "devSymb.h"
 
 static long init_record(struct boRecord *prec) {
     struct vxSym *priv;

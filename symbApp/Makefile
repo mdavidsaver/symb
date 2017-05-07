@@ -20,6 +20,7 @@ Symb_SRCS += devSoSymb.c
 Symb_SRCS += devSymbFind.c
 Symb_SRCS += devWfSymb.c
 
+Symb_LIBS += $(EPICS_BASE_IOC_LIBS)
 
 INC += devSymbTable.h
 

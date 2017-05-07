@@ -9,9 +9,10 @@
 
 /* $Id$ */
 
-#include "devSymb.h"
+#include <longinRecord.h>
 
-#include "longinRecord.h"
+#define epicsExportSharedSymbols
+#include "devSymb.h"
 
 static long init_record(struct longinRecord *prec) {
     if (devSymbFind(&prec->inp, &prec->dpvt)) {

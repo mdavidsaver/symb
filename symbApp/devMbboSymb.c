@@ -10,9 +10,10 @@
 /* $Id$ */
 
 
-#include "devSymb.h"
+#include	<mbboRecord.h>
 
-#include	"mbboRecord.h"
+#define epicsExportSharedSymbols
+#include "devSymb.h"
 
 static long init_record();
 static long write_mbbo();

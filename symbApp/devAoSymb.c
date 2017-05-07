@@ -9,9 +9,10 @@
 
 /* $Id$ */
 
-#include "devSymb.h"
+#include <aoRecord.h>
 
-#include "aoRecord.h"
+#define epicsExportSharedSymbols
+#include "devSymb.h"
 
 struct ao_DSET {
     long  number;

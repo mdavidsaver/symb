@@ -9,9 +9,10 @@
 
 /* $Id$ */
 
-#include "devSymb.h"
-
 #include <stringoutRecord.h>
+
+#define epicsExportSharedSymbols
+#include "devSymb.h"
 
 static long init_record();
 static long write_stringout();

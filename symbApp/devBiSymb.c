@@ -9,9 +9,10 @@
 
 /* $Id$ */
 
-#include "devSymb.h"
+#include <biRecord.h>
 
-#include "biRecord.h"
+#define epicsExportSharedSymbols
+#include "devSymb.h"
 
 static long init_record(struct biRecord *prec) {
     if (devSymbFind(&prec->inp, &prec->dpvt)) {

@@ -9,9 +9,10 @@
 
 /* $Id$ */
 
-#include "devSymb.h"
-
 #include	<mbbiRecord.h>
+
+#define epicsExportSharedSymbols
+#include "devSymb.h"
 
 
 /* Create the dset for devMbbiSymbRaw */

@@ -9,9 +9,10 @@
 
 /* $Id$ */
 
-#include "devSymb.h"
+#include <waveformRecord.h>
 
-#include "waveformRecord.h"
+#define epicsExportSharedSymbols
+#include "devSymb.h"
 
 static int sizeofTypes[] = {MAX_STRING_SIZE,1,1,2,2,4,4,4,8,2};
 

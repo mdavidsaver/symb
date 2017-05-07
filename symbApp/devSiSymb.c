@@ -9,8 +9,10 @@
 
 /* $Id$ */
 
-#include "devSymb.h"
 #include <stringinRecord.h>
+
+#define epicsExportSharedSymbols
+#include "devSymb.h"
 
 static long init_record(struct stringinRecord *prec) {
     if (devSymbFind(&prec->inp, &prec->dpvt)) {

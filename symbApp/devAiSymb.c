@@ -11,8 +11,10 @@
 
 #include <limits.h>
 
-#include "devSymb.h"
 #include <aiRecord.h>
+
+#define epicsExportSharedSymbols
+#include "devSymb.h"
 
 struct ai_DSET {
     long      number;
