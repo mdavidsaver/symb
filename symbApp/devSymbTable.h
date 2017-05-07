@@ -27,4 +27,11 @@ typedef struct {
     const symbInfo * const symbols;
 } symbInfoTable;
 
+#define SYMTAB_EXTERN(SYMB) extern char SYMB;
+
+#define SYMTAB_START() static const symbInfo magicSymbols[] = {
+#define SYMTAB_ENTRY(SYMB)  {#SYMB, &SYMB}
+#define SYMTAB_ENTRY_ALIAS(SYMB, NAME)  {NAME, &SYMB}
+#define SYMTAB_END() }; const symbInfoTable magicSymbTable = { sizeof(magicSymbols)/sizeof(magicSymbols[0]), magicSymbols };
+
 #endif // DEVSYMBTABLE_H

@@ -27,6 +27,4 @@ Symb_SRCS += devSymbTable.c
 
 LIBRARY_IOC = Symb
 
-SCRIPTS_HOST += genSymTable.py
-
 include $(TOP)/configure/RULES

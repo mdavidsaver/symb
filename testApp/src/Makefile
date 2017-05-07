@@ -53,7 +53,5 @@ PROD_vxWorks = symbTestHarness
 DEVSYMB = $(TOP)
 
 include $(TOP)/configure/RULES
-# include rules for generating symbol table
-include $(DEVSYMB)/configure/RULES_SYMTAB
 #----------------------------------------
 #  ADD RULES AFTER THIS LINE
