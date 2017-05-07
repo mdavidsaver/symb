@@ -34,8 +34,10 @@ testHarness_SRCS += testIoc_registerRecordDeviceDriver.cpp
 
 TESTPROD_HOST += testFull
 testFull_SRCS += testFull.c
+testFull_SRCS += testFull.syms.c
 testFull_SRCS += testIoc_registerRecordDeviceDriver.cpp
 testHarness_SRCS += testFull.c
+testHarness_SRCS += testFull.syms.c
 testFull_LIBS += Symb
 testFull_LIBS += $(EPICS_BASE_IOC_LIBS)
 TESTFILES += ../testIoc.db
