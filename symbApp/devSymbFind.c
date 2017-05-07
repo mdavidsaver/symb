@@ -91,6 +91,7 @@ int devSymbFind(struct link *plink, void **pdpvt)
         const symbInfo *info = symbInfoByName(nptr);
         if(info)
             paddr = info->addr;
+        symbInfoFree(info);
     }
     if(!paddr)
         return 3;

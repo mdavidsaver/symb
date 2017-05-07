@@ -14,9 +14,9 @@ TESTS += testParse
 
 TESTPROD_HOST += testInit
 testInit_SRCS += testInit.c
-testInit_SRCS += testInit.syms.c
+testInit_SRCS += testInit.syms.cpp
 testHarness_SRCS += testInit.c
-testHarness_SRCS += testInit.syms.c
+testHarness_SRCS += testInit.syms.cpp
 testInit_LIBS += Symb
 testInit_LIBS += $(EPICS_BASE_IOC_LIBS)
 TESTS += testInit
@@ -34,10 +34,10 @@ testHarness_SRCS += testIoc_registerRecordDeviceDriver.cpp
 
 TESTPROD_HOST += testFull
 testFull_SRCS += testFull.c
-testFull_SRCS += testFull.syms.c
+testFull_SRCS += testFull.syms.cpp
 testFull_SRCS += testIoc_registerRecordDeviceDriver.cpp
 testHarness_SRCS += testFull.c
-testHarness_SRCS += testFull.syms.c
+testHarness_SRCS += testFull.syms.cpp
 testFull_LIBS += Symb
 testFull_LIBS += $(EPICS_BASE_IOC_LIBS)
 TESTFILES += ../testIoc.db
