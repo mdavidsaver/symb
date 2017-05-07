@@ -9,13 +9,10 @@
 
 /* $Id$ */
 
-#include	"dbDefs.h"
-#include	"dbAccess.h"
-#include	"recGbl.h"
-#include	"devSup.h"
-#include	"devSymb.h"
-#include	"epicsExport.h"
-#include	"mbboRecord.h"
+
+#include	<devSymb.h>
+
+#include	<mbboRecord.h>
 
 static long init_record();
 static long write_mbbo();

@@ -15,6 +15,9 @@
 #include	<stdio.h>
 #include	<string.h>
 
+/* quiet deprecation warnings from Base 3.16.1 */
+#define USE_TYPED_RSET
+
 #ifdef epicsExportSharedSymbols
 #   define devSymb_epicsExportSharedSymbols
 #   undef epicsExportSharedSymbols
