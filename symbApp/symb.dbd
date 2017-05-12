@@ -1,3 +1,25 @@
+device(ai, INST_IO, devAiSymb, "Global Variable")
+device(ao, INST_IO, devAoSymb, "Global Variable")
+device(bi, INST_IO, devBiSymb, "Global Variable")
+device(bo, INST_IO, devBoSymb, "Global Variable")
+device(longin, INST_IO, devLiSymb, "Global Variable")
+device(longout, INST_IO, devLoSymb, "Global Variable")
+device(mbbi, INST_IO, devMbbiSymb, "Global Variable")
+device(mbbo, INST_IO, devMbboSymb, "Global Variable")
+device(stringin, INST_IO, devSiSymb, "Global Variable")
+device(stringout, INST_IO, devSoSymb, "Global Variable")
+device(waveform, INST_IO, devWfSymb, "Global Variable")
+device(mbbi, INST_IO, devMbbiSymbRaw, "Raw Global Variable")
+device(mbbo, INST_IO, devMbboSymbRaw, "Raw Global Variable")
+
+# Conversion support
+device(ai, INST_IO, devAiSymbLong, "Global long Variable")
+device(ai, INST_IO, devAiSymbShort, "Global short Variable")
+device(mbbi, INST_IO, devMbbiSymbRaw, "Raw Global Variable")
+device(mbbo, INST_IO, devMbboSymbRaw, "Raw Global Variable")
+
+# The same definitions with "Global" -> "vxWorks"
+
 device(ai, INST_IO, devAiSymb, "vxWorks Variable")
 device(ao, INST_IO, devAoSymb, "vxWorks Variable")
 device(bi, INST_IO, devBiSymb, "vxWorks Variable")
