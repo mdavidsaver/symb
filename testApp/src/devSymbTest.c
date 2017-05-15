@@ -17,9 +17,13 @@ This module contains routines for testing vxWorks global variable
 device support.
 */
 
+#include <stdlib.h>
+#include <string.h>
 #include "devSymb.h"
-
-
+#include <epicsThread.h>
+#include <iocsh.h>
+#include <epicsExport.h>
+#include <registryFunction.h>
 
 /* global variables for testing */
 
@@ -50,14 +54,14 @@ double *testDoublePtr = testStruct.yyyy;
 char *testStringPtr = testStruct.zzzz;
 
 /* routines for starting and stopping auto-change of values */
-long testRunning = 0;
+int symbTestRunning = 0;
 
-int testStart() {
+int symbTestStart() {
     int i, j;
 
-    testRunning = 1;
+    symbTestRunning = 1;
 
-    for ( i = 0; testRunning; i++ ) {
+    for ( i = 0; symbTestRunning; i++ ) {
 
 	/* change global data values */
  	testLongScalar++;
@@ -79,14 +83,29 @@ int testStart() {
 	    strcpy( testStruct.zzzz, "dolly hello" );
 
 	/* wait a second */
-	taskDelay( sysClkRateGet() );
+	epicsThreadSleep( 1 );
     }
     printf( "test stopped\n" );
     return 0;
 }
 
-int testStop() {
-    testRunning = 0;
+int symbTestStop() {
+    symbTestRunning = 0;
     return 0;
 }
+
+static const iocshFuncDef symbTestStartFuncDef = {"symTestStart", 0, NULL}; 
+static void symbTestStartCallFunc (const iocshArgBuf *args) {symbTestStart();}
+
+static const iocshFuncDef symbTestStopFuncDef = {"symTestStart", 0, NULL}; 
+static void symbTestStopCallFunc (const iocshArgBuf *args) {symbTestStop();}
+
+static void symbTestRegisterCommands (void) {
+    iocshRegister(&symbTestStartFuncDef, symbTestStartCallFunc);
+    iocshRegister(&symbTestStopFuncDef, symbTestStopCallFunc);
+}
+
+epicsExportRegistrar(symbTestRegisterCommands);
+epicsExportAddress(int, symbTestRunning);
+epicsExportAddress(double, testDoubleScalar);
 
