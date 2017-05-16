@@ -53,6 +53,14 @@ symbTestHarness_SRCS += symbTestHarness.c
 symbTestHarness_LIBS += Symb
 symbTestHarness_LIBS += $(EPICS_BASE_IOC_LIBS)
 
+DBD += devSymbTest.dbd
+debSymbTest_DBD += symb.dbd
+devSymbTest_SRCS += devSymbTest.c
+devSymbTest_SRCS += testApp.syms.cpp
+devSymbTest_LIBS += Symb
+devSymbTest_LIBS += $(EPICS_BASE_IOC_LIBS)
+LIBRARY_IOC = devSymbTest
+
 PROD_vxWorks += symbTestHarness
 PROD_RTEMS += symbTestHarness
 
